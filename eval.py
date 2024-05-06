@@ -95,13 +95,13 @@ def main(run_id):
                     counter += 1
                     print("Error:", e.error)
 
-    print("---")
-    calculate_results(outputs, MODELS)
-    print("---")
-    calculate_results(outputs, PROMPTS)
-    print("---")
-    calculate_results(outputs, VARIABLES)
-    print("---")
+    # print("---")
+    # calculate_results(outputs, MODELS)
+    # print("---")
+    # calculate_results(outputs, PROMPTS)
+    # print("---")
+    # calculate_results(outputs, VARIABLES)
+    # print("---")
 
     print(f"Time taken: {time.perf_counter() - start_time:.2f} seconds")
 
