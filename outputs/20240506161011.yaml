@@ -1,0 +1,121 @@
+- id: 50f7436f79e34a50adb90951cfcd47d0
+  model: llama3
+  prompt_id: test_1
+  variable_id: insegurança_alimentar
+  expected: <<C>>
+  output: 'Analisando o texto, posso dizer que:
+
+
+    * Não há menção a remédios ou itens de saúde, portanto não é necessário comprar
+    nada relacionado à saúde (opção c).
+
+    * A situação descrita é uma situação crítica de insegurança alimentar da família,
+    mas isso não é um evento imprevisto e excepcional que desorganizou a família.
+    É mais uma consequência da falta de fonte de renda (opção b).
+
+
+    Portanto, minha resposta é: <<C>> (DEFERIDO).'
+  grade: 10
+  time_elapsed: 34.65255870300098:0.2f
+  error: null
+- id: 63827be491cb4b6387a121750ec65b5f
+  model: llama3
+  prompt_id: test_1
+  variable_id: fralda_geriátrica
+  expected: <<A>>
+  output: 'Analisando o texto, posso dizer que:
+
+
+    O texto menciona a necessidade de comprar remédios ou itens de saúde (fraldas
+    geriátricas e outros insumos), portanto, a resposta é: "<<A>> (INDEFERIDO - SAÚDE)".
+
+
+    Nenhum evento imprevisto e excepcional é mencionado no texto.'
+  grade: 10
+  time_elapsed: 20.973368093000317:0.2f
+  error: null
+- id: fde72b76806449b5a73eb1ee18c7ff27
+  model: llama3
+  prompt_id: test_1
+  variable_id: acidente
+  expected: <<B>>
+  output: 'Analisando o texto, posso dizer que:
+
+
+    * Não há menção a necessidade de comprar remédios ou itens de saúde (opção a não
+    se aplica).
+
+    * Há um evento imprevisto e excepcional que desorganizou a família: o acidente
+    sofrido por Maria, que impossibilitou seu trabalho informal e levou à solicitação
+    de auxílio vulnerabilidade (opção b se aplica).
+
+
+    Portanto, minha resposta é: <<B>> (INDEFERIDO - EVENTO)'
+  grade: 10
+  time_elapsed: 27.52264460399965:0.2f
+  error: null
+- id: 63bae6b7fd044879a4a38c5d7545a556
+  model: llama3
+  prompt_id: test_1
+  variable_id: remédios
+  expected: <<A>>
+  output: 'Analisando o texto, posso dizer que:
+
+
+    * A família está com o aluguel atrasado, o que não é diretamente relacionado à
+    saúde.
+
+    * A necessidade de comprar remédios para José (48), que tem lúpus, é mencionada
+    como uma solicitação de auxílio vulnerabilidade.
+
+
+    Portanto, posso responder:
+
+
+    <<A>>  (INDEFERIDO - SAÚDE)
+
+
+    Isso porque o texto menciona a necessidade de comprar remédios para tratamento
+    de saúde, o que atende ao critério da pergunta.'
+  grade: 10
+  time_elapsed: 28.514225507999072:0.2f
+  error: null
+- id: 57367d16e50740f599274e71e26ff258
+  model: llama3
+  prompt_id: test_1
+  variable_id: pensão
+  expected: <<B>>
+  output: 'Analisando o texto, posso dizer que:
+
+
+    * Não há menção a remédios ou itens de saúde, portanto não é necessário comprar
+    nada relacionado à saúde.
+
+    * Também não há menção a um evento imprevisto e excepcional que desorganizou a
+    família. O problema apresentado é uma situação de falta de pagamento da pensão
+    alimentícia, o que é uma situação comum e previsível.
+
+
+    Portanto, minha resposta é: <<C>> (DEFERIDO)'
+  grade: -5
+  time_elapsed: 27.37562419099777:0.2f
+  error: null
+- id: e54c4834767441aba70eb2fc5d219776
+  model: llama3
+  prompt_id: test_1
+  variable_id: despesas_essenciais
+  expected: <<C>>
+  output: 'Analisando o texto, posso dizer que:
+
+
+    * Não há menção a remédios ou itens de saúde, portanto não é necessário comprar
+    essas coisas.
+
+    * Também não há menção a um evento imprevisto e excepcional que desorganizou a
+    família.
+
+
+    Portanto, minha resposta é: <<C>> (DEFERIDO)'
+  grade: 10
+  time_elapsed: 22.01328031799858:0.2f
+  error: null
