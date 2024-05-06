@@ -1,0 +1,65 @@
+- id: 781f2d73376b4cb58f12b77975942261
+  model: llama3
+  prompt_id: test_1
+  variable_id: insegurança_alimentar
+  expected: <<C>>
+  grade: 10
+  time_elapsed: 44.1862328419993:0.2f
+  error: null
+  output: 'Analisando o texto, posso dizer que:
+
+
+    * Não há menção a remédios ou itens de saúde, portanto não é necessário comprar
+    nada relacionado à saúde (opção c).
+
+    * A situação descrita é uma situação crítica de insegurança alimentar da família,
+    mas isso não é um evento imprevisto e excepcional que desorganizou a família.
+    É mais uma consequência da falta de fonte de renda (opção b).
+
+
+    Portanto, minha resposta é: <<C>> (DEFERIDO).'
+- id: b74c932aeb4b43a0838486b58d7ed0da
+  model: llama3
+  prompt_id: test_1
+  variable_id: fralda_geriátrica
+  expected: <<A>>
+  grade: 10
+  time_elapsed: 20.995776485000533:0.2f
+  error: null
+  output: 'Analisando o texto, posso dizer que:
+
+
+    O texto menciona a necessidade de comprar remédios ou itens de saúde (fraldas
+    geriátricas e outros insumos), portanto, a resposta é: "<<A>> (INDEFERIDO - SAÚDE)".
+
+
+    Nenhum evento imprevisto e excepcional é mencionado no texto.'
+- id: 0d6c894a74394800a8ae6e00f8106a70
+  model: phi3
+  prompt_id: test_1
+  variable_id: insegurança_alimentar
+  expected: <<C>>
+  grade: 10
+  time_elapsed: 25.412496537999687:0.2f
+  error: null
+  output: '<<C>> (DEFERIDO)
+
+
+    O texto apresentado fala sobre a situação de insegurança alimentar da família
+    e solicita auxílio devido à vulnerabilidade financeira. Não há menção direta ou
+    indireta ao comprar remédios ou itens de saúde, nem é descrito um evento imprevisto
+    que tenha desorganizado a família. Portanto, a resposta correta é "<<C>> (DEFERIDO)".'
+- id: a5118b60dae941c79b54dfc3d3ab2f23
+  model: phi3
+  prompt_id: test_1
+  variable_id: fralda_geriátrica
+  expected: <<A>>
+  grade: 10
+  time_elapsed: 11.900588944001356:0.2f
+  error: null
+  output: '<<A>> (INDEFERIDO - SAÚDE)
+
+
+    O texto menciona a necessidade de comprar remédios ou itens de saúde, especificamente
+    fraldas geriátricas e outros insumos para um idoso acamado. Portanto, a resposta
+    correta é "<<A>> (INDEFERIDO - SAÚDE)".'

@@ -1,0 +1,37 @@
+- !!python/object:my_types.Result
+  id: e96e915d95a44555b125d6d44cc1d228
+  model: llama3
+  prompt_id: test_1
+  variable_id: insegurança_alimentar
+  expected: <<C>>
+  response: 'Analisando o texto, posso dizer que:
+
+
+    * Não há menção a remédios ou itens de saúde, portanto não é necessário comprar
+    nada relacionado à saúde (opção c).
+
+    * A situação descrita é uma situação crítica de insegurança alimentar da família,
+    mas isso não é um evento imprevisto e excepcional que desorganizou a família.
+    É mais uma consequência da falta de fonte de renda (opção b).
+
+
+    Portanto, minha resposta é: <<C>> (DEFERIDO).'
+  grade: 10
+  time_elapsed: 43.31
+  error: null
+- !!python/object:my_types.Result
+  id: b2bcdbf9bd2049fe95cb06ea7db76ee5
+  model: phi3
+  prompt_id: test_1
+  variable_id: insegurança_alimentar
+  expected: <<C>>
+  response: '<<C>> (DEFERIDO)
+
+
+    O texto apresentado fala sobre a situação de insegurança alimentar da família
+    e solicita auxílio devido à vulnerabilidade financeira. Não há menção direta ou
+    indireta ao comprar remédios ou itens de saúde, nem é descrito um evento imprevisto
+    que tenha desorganizado a família. Portanto, a resposta correta é "<<C>> (DEFERIDO)".'
+  grade: 10
+  time_elapsed: 23.85
+  error: null

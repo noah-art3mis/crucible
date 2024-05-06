@@ -1,2 +1,6 @@
-# models = ["llama3", "phi3", "mistral"]
-models = ["llama3"]
+from my_types import Model
+
+models: list[Model] = [
+    Model("llama3"),
+    Model("phi3"),
+]
