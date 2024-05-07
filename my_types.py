@@ -18,7 +18,7 @@ class Prompt:
 class Variable:
     id: str
     content: str
-    expected: str
+    expected: list[str]
     options: list[str]
 
 
@@ -28,8 +28,16 @@ class Result:
     model: str
     prompt_id: str
     variable_id: str
-    expected: str
+    expected: list[str]
     response: Optional[str]
     grade: int
     time_elapsed: float
     error: Optional[str]
+
+
+@dataclass()
+class Task:
+    options: list[str] | None
+    models: list[Model] | None
+    prompts: list[Prompt] | None
+    variables: list[Variable] | None

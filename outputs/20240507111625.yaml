@@ -1,0 +1,131 @@
+- !!python/object:my_types.Result
+  id: ae70e3f783e14310a8749ba9fb7f7f1a
+  model: llama3
+  prompt_id: test_3
+  variable_id: insegurança_alimentar
+  expected:
+  - <<NAO>>
+  - <<NÃO>>
+  response: 'Analisando o texto, posso identificar os seguintes pontos:
+
+
+    * A família é composta pela mãe e seus filhos.
+
+    * Não há fonte de renda para a família.
+
+    * A solicitação é feita por vulnerabilidade devido à situação de insegurança alimentar
+    da família.
+
+
+    Nenhum desses pontos menciona a necessidade de comprar remédios ou itens de saúde.
+    Portanto, minha resposta é:
+
+
+    <<NÃO>>'
+  grade: 0
+  time_elapsed: 27.93
+  error: null
+- !!python/object:my_types.Result
+  id: a17afe9c8e0d44a8827635c95ed8f621
+  model: llama3
+  prompt_id: test_3
+  variable_id: fralda_geriátrica
+  expected:
+  - <<SIM>>
+  response: 'Analisando o texto, posso identificar os seguintes pontos:
+
+
+    * A família reside em um domicílio improvisado.
+
+    * Ela tem um idoso acamado (isto é, com alguma deficiência física).
+
+    * Solicita-se o auxílio para vulnerabilidade a fim de garantir a compra de fraldas
+    geriátricas e outros insumos.
+
+
+    A partir disso, posso concluir que a solicitação menciona a necessidade de comprar
+    itens de saúde (fraldas geriátricas), mas não remédios. Portanto, minha resposta
+    é:
+
+
+    <<SIM>>'
+  grade: 1
+  time_elapsed: 27.77
+  error: null
+- !!python/object:my_types.Result
+  id: 1f9d1ecadebc4797a3ab40f0eaf54a85
+  model: llama3
+  prompt_id: test_3
+  variable_id: acidente
+  expected:
+  - <<SIM>>
+  response: 'Analisando o texto, posso dizer que não há nenhuma menção à necessidade
+    de comprar remédios ou itens de saúde. O texto apenas descreve a situação da família
+    monoparental e a solicitação de auxílio vulnerabilidade após um acidente sofrido
+    pela mãe.
+
+
+    Portanto, minha resposta é: <<NÃO>>'
+  grade: 0
+  time_elapsed: 21.25
+  error: null
+- !!python/object:my_types.Result
+  id: 5d6b27ebfb4d4ae09dd2140afe822866
+  model: llama3
+  prompt_id: test_3
+  variable_id: remédios
+  expected:
+  - <<SIM>>
+  response: 'Analisando o texto, posso identificar que a família está com o aluguel
+    atrasado e precisa da compra de remédios para José, que tem lúpus. Isso sugere
+    que os remédios são necessários para tratar da doença de José.
+
+
+    Portanto, minha resposta é: <<SIM>>'
+  grade: 1
+  time_elapsed: 19.07
+  error: null
+- !!python/object:my_types.Result
+  id: 5853d290474e483b9e045b3d2d4516b7
+  model: llama3
+  prompt_id: test_3
+  variable_id: pensão
+  expected:
+  - <<SIM>>
+  response: 'Analisando o texto, posso dizer que não há menção à compra de remédios
+    ou itens de saúde. O texto se refere à situação financeira da família e ao pedido
+    de auxílio para mitigar as desproteções vividas pela família.
+
+
+    Portanto, minha resposta é: <<NÃO>>'
+  grade: 0
+  time_elapsed: 20.96
+  error: null
+- !!python/object:my_types.Result
+  id: 01c36920cd3c46619d7e9106ecfee976
+  model: llama3
+  prompt_id: test_3
+  variable_id: despesas_essenciais
+  expected:
+  - <<NAO>>
+  - <<NÃO>>
+  response: 'Analisando o texto, posso dizer que:
+
+
+    * A família é composta por Josefa e seus 5 filhos com idades entre 1 e 17 anos.
+
+    * Eles vivem apenas com a renda de coleta de material reciclável.
+
+    * Relatam dificuldade para manter as despesas essenciais.
+
+    * Solicita-se o auxílio vulnerabilidade.
+
+
+    Nenhum trecho do texto menciona remédios ou itens de saúde. Portanto, minha resposta
+    é:
+
+
+    <<NÃO>>'
+  grade: 0
+  time_elapsed: 27.22
+  error: null
