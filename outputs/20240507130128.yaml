@@ -82,3 +82,44 @@
   grade: 1
   time_elapsed: 23.76
   error: null
+- !!python/object:utils.my_types.Result
+  id: 99cf15b1478c49f7869003875d0ef862
+  model: llama3
+  prompt_id: menciona_0
+  variable_id: pensão
+  expected:
+  - <<B>>
+  response: 'Analisando o texto, não há menção à necessidade de comprar remédios ou
+    itens de saúde (opção a). Além disso, não há menção a um evento imprevisto e excepcional
+    que tenha levado à busca de benefício (opção b).
+
+
+    Portanto, a resposta é: <<C>> (DEFERIDO)'
+  grade: 0
+  time_elapsed: 22.19
+  error: null
+- !!python/object:utils.my_types.Result
+  id: 7448b305db81441d865e0ed12ae01f56
+  model: llama3
+  prompt_id: menciona_0
+  variable_id: despesas_essenciais
+  expected:
+  - <<C>>
+  response: 'Analisando o texto, posso dizer que:
+
+
+    * Não há menção a remédios ou itens de saúde, portanto não há necessidade de comprar
+    remédios ou itens de saúde (opção c).
+
+    * O texto não menciona um evento imprevisto e excepcional que tenha levado à busca
+    de benefício (opção b).
+
+    * O texto se refere à situação financeira difícil da família monoparental, que
+    solicita auxílio por vulnerabilidade, mas não há menção a saúde ou eventos imprevistos
+    (opção c).
+
+
+    Portanto, minha resposta é: <<C>> (DEFERIDO).'
+  grade: 1
+  time_elapsed: 31.24
+  error: null

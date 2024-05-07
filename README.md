@@ -6,12 +6,13 @@ Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally.
 
 ## How to use
 
-1.  Set the models in `eval_models.py`, prompts in `eval_prompts.py` and variables in `eval_variables.py`.
-1.  Set grading style in `grading.py`. This is important.
-    -   "binary": is either right or wrong
-    -   "qualitative": ask claude (to be implemented)
-1.  Run `python eval.py`.
-1.  Logs from the run will be in `output/<datetime>.yaml`.
+1. Setup: `python -m venv venv`, `source venv/bin/activate`, `pip install -r requirements.txt`
+1. Set the models in `eval_models.py`, prompts in `eval_prompts.py` and variables in `eval_variables.py`. See section on parameters.
+1. (Not implemented) Set grading style in `main.py`.
+    - "binary": is either right or wrong
+    - "qualitative": ask claude
+1. Run `python eval.py`.
+1. Logs from the run will be in `output/<datetime>.yaml`.
 
 ## Parameters
 
@@ -50,6 +51,7 @@ Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally.
 ## TODO
 
 -   add tests
+-   add qualitative eval
 -   add [asyncio](https://github.com/ollama/ollama-python?tab=readme-ov-file#async-client)
 -   add details on which answers tend to be wrong. summary expected
 
