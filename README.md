@@ -1,12 +1,16 @@
 ## Crucible
 
-Prompt evaluation package. Can handle multiple models, prompts and variables at the same time.
+Prompt evaluation package ("evals"). Can handle multiple models, prompts and variables at the same time.
 
 Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally.
 
 ## How to use
 
 1.  Set the models in `eval_models.py`, prompts in `eval_prompts.py` and variables in `eval_variables.py`.
+1.  Set grading style in `grading.py`. This is important.
+    -   "binary": is either right or wrong
+    -   "qualitative": ask claude (to be implemented)
+    -   "out_of_ten": loses points if wrong options are present in answer
 1.  Run `python eval.py`.
 1.  Logs from the run will be in `output/<datetime>.yaml`.
 
@@ -45,10 +49,11 @@ Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally.
 
 -   add tests
 -   add [asyncio](https://github.com/ollama/ollama-python?tab=readme-ov-file#async-client)
--   refactor calculate_results
+-   add details on which answers tend to be wrong. summary expected
 
 ## Resources
 
+-   https://github.com/anthropics/anthropic-cookbook/blob/main/misc/building_evals.ipynb
 -   https://arize.com/blog-course/evaluating-prompt-playground/
 -   https://www.confident-ai.com/blog/a-gentle-introduction-to-llm-evaluation
 -   https://stephencollins.tech/posts/how-to-use-promptfoo-for-llm-testing

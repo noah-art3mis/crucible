@@ -1,7 +1,7 @@
-from my_types import Variable
+from utils.my_types import Variable
 
 
-def grade_response(response: str, variable: Variable, grading_type) -> int:
+def grade_response(response: str, variable: Variable, grading_type: str) -> int:
     if grading_type == "binary":
         for expected in variable.expected:
             if expected in response:

@@ -1,5 +1,5 @@
 from typing import Iterable
-from my_types import Model, Prompt, Variable
+from utils.my_types import Model, Prompt, Variable
 import ollama
 
 def query(

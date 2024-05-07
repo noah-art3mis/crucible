@@ -29,10 +29,10 @@ class Result:
     prompt_id: str
     variable_id: str
     expected: list[str]
-    response: Optional[str]
-    grade: int
-    time_elapsed: float
-    error: Optional[str]
+    response: str | None = None
+    grade: int | None = None
+    time_elapsed: float | None = None
+    error: str | None = None
 
 
 @dataclass()

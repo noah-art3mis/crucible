@@ -1,0 +1,22 @@
+- !!python/object:utils.my_types.Result
+  id: de4b649431b341e9b60d847918d7cbe4
+  model: llama3
+  prompt_id: menciona_0
+  variable_id: insegurança_alimentar
+  expected:
+  - <<C>>
+  response: 'Analisando o texto, posso dizer que:
+
+
+    * Não há menção a remédios ou itens de saúde, portanto não é necessário comprar
+    nada relacionado à saúde (opção c).
+
+    * A situação descrita é uma situação crítica e excepcional para a família, pois
+    eles não têm fonte de renda e estão vivendo em insegurança alimentar. Isso pode
+    ser considerado um evento imprevisto e desorganizador para a família (opção b).
+
+
+    Portanto, minha resposta é: <<B>> (INDEFERIDO - EVENTO)'
+  grade: 0
+  time_elapsed: 34.94
+  error: null

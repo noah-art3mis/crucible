@@ -1,0 +1,179 @@
+- !!python/object:my_types.Result
+  id: a5a94acc6142407c8f9b614b2c4ce82b
+  model: phi3
+  prompt_id: menciona
+  variable_id: insegurança_alimentar
+  expected: &id001
+  - <<C>>
+  response: '<<C>> (DEFERIDO)
+
+
+    O texto apresentado fala sobre a situação financeira da família e solicita ajuda
+    devido à insegurança alimentar. Não há menção de compras de remédios ou itens
+    de saúde, nem de um evento imprevisto que tenha desorganizado a família.'
+  grade: 1
+  time_elapsed: 20.97
+  error: null
+- !!python/object:my_types.Result
+  id: eb13a74ecbda411a986c1699e80972f8
+  model: phi3
+  prompt_id: menciona
+  variable_id: fralda_geriátrica
+  expected: &id002
+  - <<A>>
+  response: <<A>> (INDEFERIDO - SAÚDE)
+  grade: 1
+  time_elapsed: 6.13
+  error: null
+- !!python/object:my_types.Result
+  id: 5c03e0455c6241ddb43e9db5bc8784a6
+  model: phi3
+  prompt_id: deferimento
+  variable_id: insegurança_alimentar
+  expected: *id001
+  response: 'C
+
+
+    A solicitação menciona uma situação de insegurança alimentar, que pode ser considerada
+    como um fato novo e excepcional que desorganizou a família, o que atende à regra
+    2 para deferimento do benefício. A ausência de informações sobre compras específinas
+    de remédios ou itens de saúde não permite concluir se a solicitação deve ser indeferida
+    por essa razão (regra 1).'
+  grade: 0
+  time_elapsed: 25.84
+  error: null
+- !!python/object:my_types.Result
+  id: 2959097f48ba4708918dd70468797860
+  model: phi3
+  prompt_id: deferimento
+  variable_id: fralda_geriátrica
+  expected: *id002
+  response: 'C
+
+
+    A solicitação menciona um idoso acamado, o que pode ser considerado um fato novo
+    e excepcional que desorganizou a família, de acordo com a regra 2. Portanto, não
+    há indicação direta da regra 1 para indeferimento, já que as fraldas geriátricas
+    são insumos de saúde necessários para o idoso e não remédios ou próteses/órteses.'
+  grade: 0
+  time_elapsed: 20.29
+  error: null
+- !!python/object:my_types.Result
+  id: 9b0ef5842d944fc4ab10c50430b65bde
+  model: mistral
+  prompt_id: menciona
+  variable_id: insegurança_alimentar
+  expected: *id001
+  response: ' C. (Definido)
+
+
+    O texto não menciona a necessidade de comprar remédios ou itens de saúde, e nem
+    relata um evento imprevisto e excepcional que desorganizou a família. Ele apenas
+    descreve a situação de insegurança alimentar da família e a solicitação de auxílio
+    por parte dessa família.'
+  grade: 0
+  time_elapsed: 39.04
+  error: null
+- !!python/object:my_types.Result
+  id: e8750abb184243f7ac301e7af66ace82
+  model: mistral
+  prompt_id: menciona
+  variable_id: fralda_geriátrica
+  expected: *id002
+  response: ' Based on the given text, the answer is:
+
+
+    A (Indefinido - Saúde)
+
+
+    Explanation: The text mentions that there is an elderly person in need of diapers
+    and other supplies. This clearly indicates a requirement for health-related items
+    or medications.'
+  grade: 0
+  time_elapsed: 18.12
+  error: null
+- !!python/object:my_types.Result
+  id: 5f4ee8f667534a659f66f0fd7da8cd16
+  model: mistral
+  prompt_id: deferimento
+  variable_id: insegurança_alimentar
+  expected: *id001
+  response: ' Based on the given solicitation and rules, my analysis is as follows:
+
+
+    <rascunho>
+
+    The family consists of the mother and her children Sofia (3) and Davi (5). They
+    do not have any source of income and have requested aid due to their food insecurity.
+
+
+    First, I will carefully review the solicitation and rules. The solicitation does
+    not mention anything about purchasing medicines or health supplies (which would
+    result in an indeferral according to rule 1), nor does it report any unexpected
+    and exceptional events that disorganized the family (required for a deferral according
+    to rule 2).
+
+    </rascunho>
+
+
+    Resposta:
+
+    A
+
+
+    Justificativa:
+
+    The solicitation does not contain any information about purchasing medicines,
+    health supplies, orthoses, or prostheses. Additionally, there is no mention of
+    an unexpected and exceptional event that disorganized the family. Therefore, based
+    on the provided rules and solicitation, the request for aid should be indeferred.'
+  grade: 0
+  time_elapsed: 64.62
+  error: null
+- !!python/object:my_types.Result
+  id: 7397dbd4dfb142388f8a67dae496a476
+  model: mistral
+  prompt_id: deferimento
+  variable_id: fralda_geriátrica
+  expected: *id002
+  response: ' Based on the given solicitation and rules, my analysis is as follows:
+
+
+    <rascunho>
+
+    The family in question resides in makeshift housing and has an elderly member
+    confined to a bed. They are requesting assistance under vulnerability to ensure
+    the purchase of geriatric briefs and other supplies.
+
+
+    First, let us carefully examine the solicitation and rules. The solicitation does
+    not mention the need to buy medicines or health items (which would result in an
+    indeferral according to rule 1). However, it is not explicitly stated that there
+    is a new and exceptional event that has disorganized the family (required for
+    a deferral under rule 2).
+
+    </rascunho>
+
+
+    The solicitation does not contain enough information to determine if there is
+    an event imprevisto that desorganizou a família (a new and exceptional event that
+    disorganized the family) as required by rule 2. Therefore, based on the available
+    information, it seems that the request should be indeferred since the solicitation
+    does not meet either of the conditions for deferral under rules 1 or 2.
+
+
+    <resposta>
+
+    A
+
+    </resposta>
+
+
+    Justificativa: The family''s request does not mention the need to buy medicines,
+    health items, orthoses, or prostheses (rule 1), but it does not provide enough
+    information about a new and exceptional event that has disorganized the family
+    (rule 2). Since the solicitation does not meet either of the conditions for deferral,
+    it should be indeferred.'
+  grade: 0
+  time_elapsed: 72.96
+  error: null
