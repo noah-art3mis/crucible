@@ -1,6 +1,6 @@
 ## Crucible
 
-Prompt evaluation package ("evals"). Can handle multiple models, prompts and variables at the same time.
+Prompt evaluation package ("evals"). Test multiple models, prompts and variables.
 
 Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally.
 
@@ -10,21 +10,20 @@ Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally.
 1.  Set grading style in `grading.py`. This is important.
     -   "binary": is either right or wrong
     -   "qualitative": ask claude (to be implemented)
-    -   "out_of_ten": loses points if wrong options are present in answer
 1.  Run `python eval.py`.
 1.  Logs from the run will be in `output/<datetime>.yaml`.
 
 ## Parameters
 
-    -   `model`
-        id (str): name as understood by ollama. you might need to download it first
+-   `model`
+    id (str): name as understood by ollama. you might need to download it first
 
                 Model("llama3")
 
-    -   `prompt`
-        id (str): name of the test case
-        slots (str): name of snippet to be inserted in prompt
-        content (str): actual prompt
+-   `prompt`
+    id (str): name of the test case
+    slots (str): name of snippet to be inserted in prompt
+    content (str): actual prompt
 
                 Prompt(
                     id="test_3",
@@ -32,11 +31,11 @@ Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally.
                     content="""Sua tarefa é analisar e responder se o texto a seguir menciona a necessidade de comprar remédios ou itens de saúde. Aqui está o texto:\n\n###\n\n{variable}\n\n###\n\n\nPrimeiro, analise cuidadosamente o texto em um rascunho. Depois, responda: a solicitação citada menciona a necessidade de comprar remédios ou itens de saúde? Responda "<<SIM>>" ou "<<NÃO>>".""",
                 )
 
-    -   `variable`
-        id (str): name of the test case
-        content (str): text of snippet to be inserted in prompt
-        expected (str list): values that would be considered correct
-        options (str list): all values that the response could take
+-   `variable`
+    id (str): name of the test case
+    content (str): text of snippet to be inserted in prompt
+    expected (str list): values that would be considered correct
+    options (str list): all values that the response could take
 
                 Variable(
                     id="despesas_essenciais",

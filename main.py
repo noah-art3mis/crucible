@@ -20,7 +20,7 @@ MODELS = models
 PROMPTS = prompts
 VARIABLES = variables
 TEMPERATURE = 0.0
-GRADING_TYPE = "out_of_ten"
+GRADING_TYPE = "binary"
 
 
 def main():
