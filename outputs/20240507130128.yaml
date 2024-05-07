@@ -20,3 +20,65 @@
   grade: 1
   time_elapsed: 34.49
   error: null
+- !!python/object:utils.my_types.Result
+  id: 03731212a38f4c8caea4be003e36e77a
+  model: llama3
+  prompt_id: menciona_0
+  variable_id: fralda_geriátrica
+  expected:
+  - <<A>>
+  response: 'Analisando o texto, posso dizer que:
+
+
+    O texto menciona a necessidade de comprar remédios ou itens de saúde (fraldas
+    geriátricas e outros insumos), portanto, a resposta é:
+
+
+    <<A>> (INDEFERIDO - SAÚDE)'
+  grade: 1
+  time_elapsed: 17.63
+  error: null
+- !!python/object:utils.my_types.Result
+  id: a12c307063614e0d995b09b40fa3fa9b
+  model: llama3
+  prompt_id: menciona_0
+  variable_id: acidente
+  expected:
+  - <<B>>
+  response: 'Analisando o texto, posso dizer que:
+
+
+    * Não há menção à necessidade de comprar remédios ou itens de saúde (opção a não
+    se aplica).
+
+    * Há um evento imprevisto e excepcional que levou à busca de benefício: o acidente
+    sofrido por Maria, que a impossibilitou de trabalhar e fez com que a família solicitasse
+    auxílio (opção b se aplica).
+
+
+    Portanto, minha resposta é: <<B>> (INDEFERIDO - EVENTO)'
+  grade: 1
+  time_elapsed: 27.8
+  error: null
+- !!python/object:utils.my_types.Result
+  id: 70c60e5894d44dd5b843fbf4007e3590
+  model: llama3
+  prompt_id: menciona_0
+  variable_id: remédios
+  expected:
+  - <<A>>
+  response: 'Analisando o texto, posso dizer que:
+
+
+    A família está com o aluguel atrasado e necessita da compra de remédios para José
+    (48), que tem lúpus.
+
+
+    Nesse contexto, é mencionada a necessidade de comprar remédios para atender às
+    necessidades de saúde de José, que tem lúpus. Portanto, a resposta certa é:
+
+
+    <<A>> (INDEFERIDO - SAÚDE)'
+  grade: 1
+  time_elapsed: 23.76
+  error: null

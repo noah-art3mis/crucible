@@ -16,33 +16,36 @@ Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally.
 ## Parameters
 
 -   `model`
-    id (str): name as understood by ollama. you might need to download it first
 
-                Model("llama3")
+    -   id (str): name as understood by ollama. you might need to download it first
+
+                  Model("llama3")
 
 -   `prompt`
-    id (str): name of the test case
-    slots (str): name of snippet to be inserted in prompt
-    content (str): actual prompt
 
-                Prompt(
-                    id="test_3",
-                    slots="{variable}",
-                    content="""Sua tarefa é analisar e responder se o texto a seguir menciona a necessidade de comprar remédios ou itens de saúde. Aqui está o texto:\n\n###\n\n{variable}\n\n###\n\n\nPrimeiro, analise cuidadosamente o texto em um rascunho. Depois, responda: a solicitação citada menciona a necessidade de comprar remédios ou itens de saúde? Responda "<<SIM>>" ou "<<NÃO>>".""",
-                )
+    -   id (str): name of the test case
+    -   slots (str): name of snippet to be inserted in prompt
+    -   content (str): actual prompt
+
+                  Prompt(
+                      id="test_3",
+                      slots="{variable}",
+                      content="""Sua tarefa é analisar e responder se o texto a seguir menciona a necessidade de comprar remédios ou itens de saúde. Aqui está o texto:\n\n###\n\n{variable}\n\n###\n\n\nPrimeiro, analise cuidadosamente o texto em um rascunho. Depois, responda: a solicitação citada menciona a necessidade de comprar remédios ou itens de saúde? Responda "<<SIM>>" ou "<<NÃO>>".""",
+                  )
 
 -   `variable`
-    id (str): name of the test case
-    content (str): text of snippet to be inserted in prompt
-    expected (str list): values that would be considered correct
-    options (str list): all values that the response could take
 
-                Variable(
-                    id="despesas_essenciais",
-                    content="Família monoparental composta por Josefa e 5 filhos com idades entre 1 e 17 anos. Contam apenas com a renda de coleta de material reciclável e relatam dificuldade para manter as despesas essenciais. Solicita-se, portanto, o auxílio vulnerabilidade.",
-                    expected=["<<NAO>>", "<<NÃO>>"],
-                    options=["<<NAO>>", "<<NÃO>>, <<SIM>>"],
-                ),
+    -   id (str): name of the test case
+    -   content (str): text of snippet to be inserted in prompt
+    -   expected (str list): values that would be considered correct
+    -   options (str list): all values that the response could take
+
+                  Variable(
+                      id="despesas_essenciais",
+                      content="Família monoparental composta por Josefa e 5 filhos com idades entre 1 e 17 anos. Contam apenas com a renda de coleta de material reciclável e relatam dificuldade para manter as despesas essenciais. Solicita-se, portanto, o auxílio vulnerabilidade.",
+                      expected=["<<NAO>>", "<<NÃO>>"],
+                      options=["<<NAO>>", "<<NÃO>>, <<SIM>>"],
+                  ),
 
 ## TODO
 
