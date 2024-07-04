@@ -10,7 +10,7 @@ class Model:
 @dataclass(frozen=True)
 class Prompt:
     id: str
-    slots: str
+    slot: str
     content: str
 
 

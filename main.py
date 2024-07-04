@@ -20,8 +20,8 @@ MODELS = models
 PROMPTS = prompts
 VARIABLES = variables
 TEMPERATURE = 0.0
-DANGER_MODE = False  # does not ask permission about prices; use with care.
-GRADING_TYPE = "json"  # qualitative uses gpt4o; use with care.
+DANGER_MODE = True  # does not ask permission about prices; use with care.
+GRADING_TYPE = "qualitative"  # qualitative uses gpt4o; use with care.
 
 
 def main():
@@ -80,7 +80,7 @@ def main():
                         prompt.id,
                         variable.id,
                         case_id,
-                        str(grade),
+                        str(grade).replace("\n", " "),
                         MODELS,
                         PROMPTS,
                         VARIABLES,

@@ -16,7 +16,7 @@ task_1.options = ["<<SIM>>", "<<NAO>>", "<<NÃO>>"]
 task_1.prompts = [
     Prompt(
         id="test_3",
-        slots="{variable}",
+        slot="{variable}",
         content="""Sua tarefa é analisar e responder se o texto a seguir menciona a necessidade de comprar remédios ou itens de saúde. Aqui está o texto:
 
 ###

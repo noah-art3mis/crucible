@@ -33,12 +33,12 @@ Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally if ne
 -   `prompt`
 
     -   id (str): name of the test case
-    -   slots (str): name of snippet to be inserted in prompt
+    -   slot (str): name of snippet to be inserted in prompt
     -   content (str): actual prompt
 
                   Prompt(
                       id="test_3",
-                      slots="{variable}",
+                      slot="{variable}",
                       content="""Sua tarefa é analisar e responder se o texto a seguir menciona a necessidade de comprar remédios ou itens de saúde. Aqui está o texto:\n\n###\n\n{variable}\n\n###\n\n\nPrimeiro, analise cuidadosamente o texto em um rascunho. Depois, responda: a solicitação citada menciona a necessidade de comprar remédios ou itens de saúde? Responda "<<SIM>>" ou "<<NÃO>>".""",
                   )
 
@@ -47,7 +47,7 @@ Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally if ne
     -   id (str): name of the test case
     -   content (str): text of snippet to be inserted in prompt
     -   expected (str list): values that would be considered correct
-    -   options (str list): all values that the response could take
+    -   options (str list): all values that the response could take. leave empty if does not apply
 
                   Variable(
                       id="despesas_essenciais",
@@ -58,6 +58,11 @@ Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally if ne
 
 ## TODO
 
+-   add testes complexos
+    -   executar
+-   incorporate qualitative explanation in report
+-   refactor to compartmentalize report generation
+-   make expected a str
 -   add tests
 -   fix grading percentages
 -   add [asyncio](https://github.com/ollama/ollama-python?tab=readme-ov-file#async-client)
@@ -79,9 +84,3 @@ Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally if ne
 -   https://learnprompting.org/docs/tooling/IDEs/intro
 -   https://www.promptotype.io/
 -   https://langbear.runbear.io/introduction
-
-1. investigar os metadados
-4. langchain docs - loader
-2. melhorar o extrator das decisoes
-3. melhorar a ia da interpretacao
-5. interface. pode ser flowise

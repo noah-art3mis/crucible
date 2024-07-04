@@ -56,7 +56,7 @@ variables: list[Variable] = [
 "unanimidade": "SIM",
 "modificativos": null,
 "conhecer": null,
-"aFavor": "Benedito, Sérgio, Regina, Gurgel, Paulo",
+"aFavor": "Benedito, Gurgel, Paulo, Regina, Sérgio",
 "vencidos": null,
 "votoVista": null,
 "lavrara": null
@@ -78,7 +78,7 @@ variables: list[Variable] = [
 "unanimidade": "SIM",
 "modificativos": null,
 "conhecer": null,
-"aFavor": "Benedito, Sérgio, Regina, Gurgel, Paulo",
+"aFavor": "Benedito, Gurgel, Paulo, Regina, Sérgio",
 "vencidos": null,
 "votoVista": null,
 "lavrara": null
@@ -104,7 +104,7 @@ variables: list[Variable] = [
 "unanimidade": "SIM",
 "modificativos": null,
 "conhecer": null,
-"aFavor": "Benedito, Sérgio, Regina, Gurgel, Paulo",
+"aFavor": "Benedito, Gurgel, Paulo, Regina, Sérgio",
 "vencidos": null,
 "votoVista": null,
 "lavrara": null
@@ -116,7 +116,7 @@ variables: list[Variable] = [
     ),
     # Variable(id="embargo negado (rejeitado)", content="", expected=[], options=options),
     Variable(
-        id="embargo parcial (acolhido parcialmente)",
+        id="embargo parcial",
         content="Processo: 70331 | Ministro Relator: REGINA HELENA COSTA | Certid\u00e3o de Julgamento: Vistos e relatados estes autos em que s\u00e3o partes as acima indicadas, acordam os Ministros da PRIMEIRA TURMA do Superior Tribunal de Justi\u00e7a, em sess\u00e3o virtual de 12/09/2023 a 18/09/2023, por unanimidade, acolher parcialmente os embargos de declara\u00e7\u00e3o, com efeitos modificativos, nos termos do voto da Sra. Ministra Relatora. Os Srs. Ministros Benedito Gon\u00e7alves, S\u00e9rgio Kukina, Gurgel de Faria e Paulo S\u00e9rgio Domingues votaram com a Sra. Ministra Relatora. Presidiu o julgamento o Sr. Ministro Paulo S\u00e9rgio Domingues.",
         expected=[
             """```json
@@ -127,7 +127,7 @@ variables: list[Variable] = [
 "unanimidade": "SIM",
 "modificativos": "SIM",
 "conhecer": null,
-"aFavor": "Benedito, Sérgio, Regina, Gurgel, Paulo",
+"aFavor": "Benedito, Gurgel, Paulo, Regina, Sérgio",
 "vencidos": null,
 "votoVista": null,
 "lavrara": null
@@ -150,7 +150,7 @@ variables: list[Variable] = [
 "unanimidade": "NAO",
 "modificativos": null,
 "conhecer": null,
-"aFavor": "Gurgel, Regina, Paulo",
+"aFavor": "Gurgel, Paulo, Regina",
 "vencidos": "Sérgio",
 "votoVista": "Gurgel",
 "lavrara": "Gurgel"
@@ -173,7 +173,7 @@ variables: list[Variable] = [
 "unanimidade": "SIM",
 "modificativos": "NAO",
 "conhecer": null,
-"aFavor": "Benedito, Sérgio, Regina, Gurgel, Paulo",
+"aFavor": "Benedito, Gurgel, Paulo, Regina, Sérgio",
 "vencidos": null,
 "votoVista": null,
 "lavrara": null
@@ -196,7 +196,7 @@ variables: list[Variable] = [
 "unanimidade": "SIM",
 "modificativos": null,
 "conhecer": "SIM",
-"aFavor": "Benedito, Sérgio, Regina, Gurgel, Paulo",
+"aFavor": "Benedito, Gurgel, Paulo, Regina, Sérgio",
 "vencidos": null,
 "votoVista": null,
 "lavrara": null
@@ -218,7 +218,7 @@ variables: list[Variable] = [
 "unanimidade": "SIM",
 "modificativos": null,
 "conhecer": "PARCIAL",
-"aFavor": "Benedito, Sérgio, Regina, Gurgel, Paulo",
+"aFavor": "Benedito, Gurgel, Paulo, Regina, Sérgio",
 "vencidos": null,
 "votoVista": null,
 "lavrara": null
@@ -236,11 +236,11 @@ variables: list[Variable] = [
 
 {
 "resultado": "NEGADO",
-"online": "NAO",
+"online": "SIM",
 "unanimidade": "SIM",
 "modificativos": null,
 "conhecer": "NAO",
-"aFavor": "Benedito, Sérgio, Regina, Gurgel, Paulo",
+"aFavor": "Benedito, Gurgel, Paulo, Regina, Sérgio",
 "vencidos": null,
 "votoVista": null,
 "lavrara": null
@@ -265,7 +265,7 @@ variables: list[Variable] = [
 "unanimidade": "SIM",
 "modificativos": null,
 "conhecer": null,
-"aFavor": "Benedito, Sérgio, Regina, Gurgel, Paulo",
+"aFavor": "Benedito, Gurgel, Paulo, Regina, Sérgio",
 "vencidos": null,
 "votoVista": "Benedito",
 "lavrara": null

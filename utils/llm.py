@@ -54,5 +54,6 @@ def build_messages(prompt: Prompt, variable: Variable) -> list[dict[str, str]]:
     if not variable:
         return [{"role": "user", "content": prompt.content}]
 
-    text = prompt.content.replace("{variable}", variable.content)
+    # TODO
+    text = prompt.content.replace(prompt.slot, variable.content)
     return [{"role": "user", "content": text}]
