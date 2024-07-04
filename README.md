@@ -2,17 +2,25 @@
 
 Prompt evaluation package ("evals"). Test multiple models, prompts and variables.
 
-Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally.
+Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally if needed.
 
 ## How to use
 
-1. Setup: `python -m venv venv`, `source venv/bin/activate`, `pip install -r requirements.txt`
-1. Set the models in `eval_models.py`, prompts in `eval_prompts.py` and variables in `eval_variables.py`. See section on parameters.
-1. (Not implemented) Set grading style in `main.py`.
-    - "binary": is either right or wrong
-    - "qualitative": ask claude
-1. Run `python main.py`.
-1. Logs from the run will be in `outputs/<datetime>.yaml`.
+1.  Setup:
+
+        python -m venv venv
+        venv/Scripts/Activate
+        pip install -r requirements.txt
+
+1.  Set the models in `eval_models.py`
+1.  Set prompts in `eval_prompts.py`
+1.  Set variables in `eval_variables.py`
+1.  Set grading style in `main.py`.
+    -   "binary": is either right or wrong
+    -   "json": is either right or wrong. ignores line breaks and spaces in answer
+    -   "qualitative": ask gpt4o for feedback
+1.  Run `python main.py`.
+1.  Logs from the run will be in `outputs/<datetime>.yaml`.
 
 ## Parameters
 
@@ -51,6 +59,7 @@ Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally.
 ## TODO
 
 -   add tests
+-   fix grading percentages
 -   add [asyncio](https://github.com/ollama/ollama-python?tab=readme-ov-file#async-client)
 -   add details on which answers tend to be wrong. summary expected
 
