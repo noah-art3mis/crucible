@@ -16,9 +16,9 @@ Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally if ne
 1.  Set prompts in `eval_prompts.py`
 1.  Set variables in `eval_variables.py`
 1.  Set grading style in `main.py`.
-    -   "binary": is either right or wrong
-    -   "json": is either right or wrong. ignores line breaks and spaces in answer
-    -   "qualitative": ask gpt4o for feedback
+    -   `"binary"`: is either right or wrong
+    -   `"json"`: is either right or wrong. ignores line breaks and spaces in answer
+    -   `"qualitative"`: ask gpt4o for feedback
 1.  Run `python main.py`.
 1.  Logs from the run will be in `outputs/<datetime>.yaml`.
 
@@ -79,3 +79,9 @@ Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally if ne
 -   https://learnprompting.org/docs/tooling/IDEs/intro
 -   https://www.promptotype.io/
 -   https://langbear.runbear.io/introduction
+
+1. investigar os metadados
+4. langchain docs - loader
+2. melhorar o extrator das decisoes
+3. melhorar a ia da interpretacao
+5. interface. pode ser flowise

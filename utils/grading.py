@@ -21,17 +21,17 @@ Be """
 
 def grade_response(response: str, variable: Variable, grading_type: str) -> int | str:
     match grading_type:
+        case "binary":
+            for expected in variable.expected:
+                if response in expected:
+                    return 1
+            return 0
+
         case "json":
             for expected in variable.expected:
                 _response = response.replace("\n", "").replace(" ", "")
                 _expected = expected.replace("\n", "").replace(" ", "")
                 if _response in _expected:
-                    return 1
-            return 0
-
-        case "binary":
-            for expected in variable.expected:
-                if response in expected:
                     return 1
             return 0
 
