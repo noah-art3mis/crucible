@@ -50,8 +50,6 @@ Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally.
 
 ## TODO
 
--   add json grading
--   add qualitative grading
 -   add tests
 -   add [asyncio](https://github.com/ollama/ollama-python?tab=readme-ov-file#async-client)
 -   add details on which answers tend to be wrong. summary expected
