@@ -38,27 +38,21 @@ def estimate_costs(model: str, n_tokens: int) -> None:
     output_cost = n_tokens * MODEL_OUTPUT
     total_cost = input_cost + output_cost
 
-    print("Antiquarian AI Cleanup Cost Estimation:")
-    print("Model: ", model)
-    print(f"Tokens: {n_tokens} + {n_tokens}")
-    print(f"Total Estimated Cost: ${total_cost:.2f}")
+    print(f"Estimated Cost: {n_tokens} + {n_tokens} =  ${total_cost:.2f}")
 
 
 def get_costs_gpt4o(response) -> None:
     MODEL_INPUT = OMNI_INPUT / 1_000_000
     MODEL_OUTPUT = OMNI_OUTPUT / 1_000_000
 
-    print("\nActual Cost: ")
     i_tokens = response.usage.prompt_tokens
     o_tokens = response.usage.completion_tokens
-    print(f"Tokens: {i_tokens} + {o_tokens}")
 
     input_cost = i_tokens * MODEL_INPUT
     output_cost = o_tokens * MODEL_OUTPUT
     total_cost = input_cost + output_cost
 
-    print(f"Cost: {input_cost:.4f} + {output_cost:.4f}")
-    print(f"Total Cost: ${total_cost:.2f}")
+    print(f"\nActual Cost: {i_tokens} + {o_tokens} =  ${total_cost:.2f}")
 
 
 def get_n_tokens(model: str, text: str) -> int:
@@ -79,5 +73,3 @@ def ask_permission():
             return False
         else:
             print("Invalid input. Please enter 'y' or 'n'.")
-
-
