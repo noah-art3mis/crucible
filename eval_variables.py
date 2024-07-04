@@ -40,8 +40,7 @@ option = """```json
 # Variable(id="conhecer nao", content="", expected=[], options=options),
 # Variable(id="conhecer null", content="", expected=[], options=options),
 # Variable(id="lavrara", content="", expected=[], options=options),
-# Variable(id="voto vista 1", content="", expected=[], options=options),
-# Variable(id="voto vista 2", content="", expected=[], options=options),
+# Variable(id="voto vista", content="", expected=[], options=options),
 # ]
 
 variables: list[Variable] = [
@@ -56,7 +55,7 @@ variables: list[Variable] = [
 "online": "NAO",
 "unanimidade": "SIM",
 "modificativos": null,
-"conhecer": "NAO",
+"conhecer": null,
 "aFavor": "Benedito, Sérgio, Regina, Gurgel, Paulo",
 "vencidos": null,
 "votoVista": null,
@@ -78,7 +77,7 @@ variables: list[Variable] = [
 "online": "SIM",
 "unanimidade": "SIM",
 "modificativos": null,
-"conhecer": "NAO",
+"conhecer": null,
 "aFavor": "Benedito, Sérgio, Regina, Gurgel, Paulo",
 "vencidos": null,
 "votoVista": null,
@@ -162,14 +161,118 @@ variables: list[Variable] = [
         options=options,
     ),
     # Variable(id="modificativos sim", content="", expected=[], options=options),
-    Variable(id="modificativos nao", content="", expected=[], options=options),
+    Variable(
+        id="modificativos nao",
+        content="Processo: 2062961 | Ministro Relator: S\u00c9RGIO KUKINA | Certid\u00e3o de Julgamento: Vistos e relatados estes autos em que s\u00e3o partes as acima indicadas, acordam os Ministros da PRIMEIRA TURMA do Superior Tribunal de Justi\u00e7a, em sess\u00e3o virtual de 24/10/2023 a 30/10/2023, por unanimidade, acolher parcialmente os embargos de declara\u00e7\u00e3o, sem efeitos modificativos, nos termos do voto do Sr. Ministro Relator. Os Srs. Ministros Benedito Gon\u00e7alves, Regina Helena Costa, Gurgel de Faria e Paulo S\u00e9rgio Domingues votaram com o Sr. Ministro Relator. Presidiu o julgamento o Sr. Ministro Paulo S\u00e9rgio Domingues.",
+        expected=[
+            """```json
+
+{
+"resultado": "PARCIAL",
+"online": "SIM",
+"unanimidade": "SIM",
+"modificativos": "NAO",
+"conhecer": null,
+"aFavor": "Benedito, Sérgio, Regina, Gurgel, Paulo",
+"vencidos": null,
+"votoVista": null,
+"lavrara": null
+}
+
+```"""
+        ],
+        options=options,
+    ),
     # Variable(id="modificativos null", content="", expected=[], options=options),
-    Variable(id="conhecer sim", content="", expected=[], options=options),
-    Variable(id="conhecer parcial", content="", expected=[], options=options),
-    Variable(id="conhecer nao", content="", expected=[], options=options),
+    Variable(
+        id="conhecer sim",
+        content="Processo: 1340335 | Ministro Relator: BENEDITO GON\u00c7ALVES | Certid\u00e3o de Julgamento: Vistos e relatados estes autos em que s\u00e3o partes as acima indicadas, acordam os Ministros da Primeira Turma, por unanimidade, conhecer do recurso especial e dar-lhe provimento com determina\u00e7\u00e3o de devolu\u00e7\u00e3o dos autos ao Tribunal Regional Federal da 5\u00aa Regi\u00e3o, a fim de que aquela Corte arbitre o valor da indeniza\u00e7\u00e3o como entender de direito, nos termos do voto do Sr. Ministro Relator. Os Srs. Ministros S\u00e9rgio Kukina, Regina Helena Costa, Gurgel de Faria e Paulo S\u00e9rgio Domingues votaram com o Sr. Ministro Relator.",
+        expected=[
+            """```json
+
+{
+"resultado": "ACEITO",
+"online": "NAO",
+"unanimidade": "SIM",
+"modificativos": null,
+"conhecer": "SIM",
+"aFavor": "Benedito, Sérgio, Regina, Gurgel, Paulo",
+"vencidos": null,
+"votoVista": null,
+"lavrara": null
+}
+
+```"""
+        ],
+        options=options,
+    ),
+    Variable(
+        id="conhecer parcial",
+        content="Processo: 2006155 | Ministro Relator: S\u00c9RGIO KUKINA | Certid\u00e3o de Julgamento: Vistos e relatados estes autos em que s\u00e3o partes as acima indicadas, acordam os Ministros da PRIMEIRA TURMA do Superior Tribunal de Justi\u00e7a, em sess\u00e3o virtual de 23/05/2023 a 29/05/2023, por unanimidade, conhecer parcialmente do recurso, mas lhe negar provimento, nos termos do voto do Sr. Ministro S\u00e9rgio Kukina. Os Srs. Ministros Benedito Gon\u00e7alves, Regina Helena Costa, Gurgel de Faria e Paulo S\u00e9rgio Domingues votaram com o Sr. Ministro Relator. Presidiu o julgamento o Sr. Ministro Paulo S\u00e9rgio Domingues.",
+        expected=[
+            """```json
+
+{
+"resultado": "NEGADO",
+"online": "SIM",
+"unanimidade": "SIM",
+"modificativos": null,
+"conhecer": "PARCIAL",
+"aFavor": "Benedito, Sérgio, Regina, Gurgel, Paulo",
+"vencidos": null,
+"votoVista": null,
+"lavrara": null
+}
+
+```"""
+        ],
+        options=options,
+    ),
+    Variable(
+        id="conhecer nao",
+        content="Processo: 1845055 | Ministro Relator: S\u00c9RGIO KUKINA | Certid\u00e3o de Julgamento: Vistos e relatados estes autos em que s\u00e3o partes as acima indicadas, acordam os Ministros da PRIMEIRA TURMA do Superior Tribunal de Justi\u00e7a, em sess\u00e3o virtual de 05/03/2024 a 11/03/2024, por unanimidade, n\u00e3o conhecer do recurso, nos termos do voto do Sr. Ministro Relator. Os Srs. Ministros Benedito Gon\u00e7alves, Regina Helena Costa, Gurgel de Faria e Paulo S\u00e9rgio Domingues votaram com o Sr. Ministro Relator. Presidiu o julgamento o Sr. Ministro Paulo S\u00e9rgio Domingues.",
+        expected=[
+            """```json
+
+{
+"resultado": "NEGADO",
+"online": "NAO",
+"unanimidade": "SIM",
+"modificativos": null,
+"conhecer": "NAO",
+"aFavor": "Benedito, Sérgio, Regina, Gurgel, Paulo",
+"vencidos": null,
+"votoVista": null,
+"lavrara": null
+}
+
+"""
+        ],
+        options=options,
+    ),
     # Variable(id="conhecer null", content="", expected=[], options=options),
     # Variable(id="nao conhecer", content="", expected=[], options=options),
-    Variable(id="lavrara", content="", expected=[], options=options),
-    Variable(id="voto vista 1", content="", expected=[], options=options),
-    Variable(id="voto vista 2", content="", expected=[], options=options),
+    # Variable(id="lavrara", content="", expected=[], options=options),
+    Variable(
+        id="voto vista",
+        content="Processo: 1723732 | Ministro Relator: PAULO S\u00c9RGIO DOMINGUES | Certid\u00e3o de Julgamento: Vistos e relatados estes autos em que s\u00e3o partes as acima indicadas, acordam os Ministros da PRIMEIRA TURMA do Superior Tribunal de Justi\u00e7a, prosseguindo o julgamento, ap\u00f3s o voto-vista do Sr. Ministro Benedito Gon\u00e7alves, por unanimidade, negar provimento ao agravo interno, nos termos do voto do Sr. Ministro Relator. Os Srs. Ministros Benedito Gon\u00e7alves (voto-vista), S\u00e9rgio Kukina, Regina Helena Costa e Gurgel de Faria votaram com o Sr. Ministro Relator.",
+        expected=[
+            """```json
+
+{
+"resultado": "NEGADO",
+"online": "NAO",
+"unanimidade": "SIM",
+"modificativos": null,
+"conhecer": null,
+"aFavor": "Benedito, Sérgio, Regina, Gurgel, Paulo",
+"vencidos": null,
+"votoVista": "Benedito",
+"lavrara": null
+}
+
+```"""
+        ],
+        options=options,
+    ),
 ]
