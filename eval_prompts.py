@@ -10,7 +10,7 @@ Perguntas:
 
 1. qual foi o resultado da decisão tomada? responda com "ACEITO", "PARCIAL" ou "NEGADO"
 2. a decisão foi tomada em unanimidade? responda com "SIM" OU "NAO"
-3. houve modificativos? responda "SIM" ou "NAO"
+3. houve efeitos modificativos? responda "SIM" ou "NAO"
 4. houve conhecer? responda com "SIM", "PARCIAL" ou "NAO"
 5. qual ministro presidiu o julgamento?
 6. houve algum ministro ausente?

@@ -4,16 +4,14 @@ from utils.my_types import Model, Prompt, Result, Variable
 def generate_and_show_summary(
     outputs: list[Result],
     category: list[Model] | list[Variable] | list[Prompt],
-    grading_type="binary",
+    grading_type: str,
 ):
-    if grading_type == "binary":
+    if grading_type == "binary" or grading_type == "json":
         max_grade_proportion = 1
 
-    if grading_type == "out_of_ten":
-        raise NotImplementedError
-
     if grading_type == "qualitative":
-        raise NotImplementedError
+        print("Grading type: qualitative. Read the logs.")
+        return
 
     for item in category:
         subset = get_result_subset(item, outputs)

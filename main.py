@@ -7,7 +7,7 @@ from eval_prompts import prompts
 from eval_variables import variables
 from eval_models import models
 
-from utils.my_types import Result
+from utils.my_types import Result, Model
 
 from utils.llm import query
 from utils.grading import grade_response
@@ -20,8 +20,8 @@ MODELS = models
 PROMPTS = prompts
 VARIABLES = variables
 TEMPERATURE = 0.0
-GRADING_TYPE = "binary"
-DANGER_MODE = True  # does not ask permission about prices. use with care.
+DANGER_MODE = True  # does not ask permission about prices; use with care.
+GRADING_TYPE = "json"  # qualitative uses gpt4o; use with care.
 
 
 def main():
@@ -104,13 +104,13 @@ def main():
     print("SUMMARY")
     print()
     print("BY MODEL")
-    generate_and_show_summary(outputs, MODELS)
+    generate_and_show_summary(outputs, MODELS, GRADING_TYPE)
     print()
     print("BY PROMPT")
-    generate_and_show_summary(outputs, PROMPTS)
+    generate_and_show_summary(outputs, PROMPTS, GRADING_TYPE)
     print()
     print("BY VARIABLE")
-    generate_and_show_summary(outputs, VARIABLES)
+    generate_and_show_summary(outputs, VARIABLES, GRADING_TYPE)
     print()
     print("BY EXPECTED")
     print("todo")

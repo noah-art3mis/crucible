@@ -30,7 +30,7 @@ class Result:
     variable_id: str
     expected: list[str]
     response: str | None = None
-    grade: int | None = None
+    grade: int | str | None = None
     time_elapsed: float | None = None
     error: str | None = None
 
