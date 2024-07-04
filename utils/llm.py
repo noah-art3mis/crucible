@@ -1,8 +1,8 @@
-from openai import OpenAI
 import sys
-from utils.my_types import Model, Prompt, Variable
-import ollama
 from dotenv import load_dotenv
+import ollama
+from openai import OpenAI
+from utils.my_types import Model, Prompt, Variable
 from utils.openai import (
     estimate_costs,
     get_n_tokens,
@@ -27,9 +27,10 @@ def query(
 
         messages = build_messages(prompt, variable)
         n_tokens = get_n_tokens(model.id, str(messages))
-        estimate_costs(model.id, n_tokens)
 
         if not danger_mode:
+            estimate_costs(model.id, n_tokens)
+
             if not ask_permission():
                 sys.exit(0)
 
@@ -41,7 +42,8 @@ def query(
             temperature=temp,
         )
 
-        get_costs_gpt4o(response)
+        if not danger_mode:
+            get_costs_gpt4o(response)
 
         return response.choices[0].message.content  # type: ignore
 

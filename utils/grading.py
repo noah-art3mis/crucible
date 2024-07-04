@@ -1,31 +1,60 @@
-from utils.my_types import Variable
+from utils.my_types import Model, Variable, Prompt
+from utils.llm import query
+
+GRADING_MODEL = Model("gpt-4o")
+GRADING_PROMPT = """Rate this AI response from 0 to 10. Be brief.
+
+This was the expected response:
+
+{expected}
+
+###
+
+This was the AI response:
+
+{response}
+
+###
+
+Be """
 
 
-def grade_response(response: str, variable: Variable, grading_type: str) -> int:
-    if grading_type == "binary":
-        for expected in variable.expected:
-            if expected in response:
-                return 1
+def grade_response(response: str, variable: Variable, grading_type: str) -> int | str:
+    match grading_type:
+        case "json":
+            for expected in variable.expected:
+                _response = response.replace("\n", "").replace(" ", "")
+                _expected = expected.replace("\n", "").replace(" ", "")
+                if _response in _expected:
+                    return 1
             return 0
 
-    if grading_type == "qualitative":
-        raise NotImplementedError
+        case "binary":
+            for expected in variable.expected:
+                if response in expected:
+                    return 1
+            return 0
 
-    if grading_type == "out_of_ten":
-        grade = 0  # out of 10
+        case "qualitative":
+            _model = GRADING_MODEL
+            _variable = Variable(
+                id="grading_variable", content=response, expected=[], options=[]
+            )
+            _prompt = Prompt(
+                id="grading_prompt",
+                slots="XXX",
+                content=GRADING_PROMPT.replace(
+                    "{expected}", variable.expected[0]
+                ).replace("{response}", response),
+            )
+            response = query(
+                model=_model,
+                prompt=_prompt,
+                variable=_variable,
+                temp=0,
+                danger_mode=True,
+            )
+            return response
 
-        expected = variable.expected
-        possible_responses = variable.options
-
-        for expected in variable.expected:
-            if expected in response:
-                grade = 10
-
-        # penalize if it cites other possible responses
-        if possible_responses:
-            other_responses = set(possible_responses) - {x for x in expected}
-            for other in other_responses:
-                if other in response:
-                    grade -= 5
-
-        return int(max(grade, 0))
+        case _:
+            raise ValueError(f"Unknown grading type: {grading_type}")
