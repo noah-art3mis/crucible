@@ -11,8 +11,8 @@ Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally.
 1. (Not implemented) Set grading style in `main.py`.
     - "binary": is either right or wrong
     - "qualitative": ask claude
-1. Run `python eval.py`.
-1. Logs from the run will be in `output/<datetime>.yaml`.
+1. Run `python main.py`.
+1. Logs from the run will be in `outputs/<datetime>.yaml`.
 
 ## Parameters
 

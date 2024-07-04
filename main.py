@@ -21,6 +21,7 @@ PROMPTS = prompts
 VARIABLES = variables
 TEMPERATURE = 0.0
 GRADING_TYPE = "binary"
+DANGER_MODE = True  # does not ask permission about prices. use with care.
 
 
 def main():
@@ -67,8 +68,7 @@ def main():
                 )
 
                 try:
-                    output = query(model, prompt, variable, TEMPERATURE)
-                    response = output["message"]["content"]  # type: ignore
+                    response = query(model, prompt, variable, TEMPERATURE, DANGER_MODE)
                     grade = grade_response(response, variable, GRADING_TYPE)
 
                     result.response = response

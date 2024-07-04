@@ -1,42 +1,40 @@
 from utils.my_types import Variable
 
-options = ["<<A>>", "<<B>>", "<<C>>"]
+options = []
 
 variables: list[Variable] = [
     Variable(
-        id="insegurança_alimentar",
-        content="A família é composta pela mãe e os filhos Sofia (3) e Davi (5). Não possuem fonte de renda. Solicito o auxílio vulnerabilidade devido a situação de insegurança alimentar da família.",
-        expected=["<<C>>"],
+        id="recurso negado",
+        content="Vistos e relatados estes autos em que são partes as acima indicadas, acordam os Ministros da PRIMEIRA TURMA do Superior Tribunal de Justiça, em sessão virtual de 03/10/2023 a 09/10/2023, por unanimidade, negar provimento ao recurso, nos termos do voto do Sr. Ministro Relator. Os Srs. Ministros Benedito Gonçalves, Sérgio Kukina, Regina Helena Costa e Gurgel de Faria votaram com o Sr. Ministro Relator. Presidiu o julgamento o Sr. Ministro Paulo Sérgio Domingues.",
+        expected=[
+            """```jsonl\n\n{"resultado": "NEGADO","unanimidade": "SIM","modificativos": "NAO","conhecer": null,"presidiu": "Paulo","ausente": null,"aFavor": "Benedito, Sérgio, Regina, Gurgel","vencidos": null,"lavrara": null,"desempate": null,"votoVista": null}\n\n```"""
+        ],
         options=options,
     ),
-    Variable(
-        id="fralda_geriátrica",
-        content="Família residente em domicílio improvisado e tem um idoso acamado. Solicita-se o auxílio vulnerabilidade a fim de garantir a compra de fraldas geriátricas e outros insumos.",
-        expected=["<<A>>"],
-        options=options,
-    ),
-    Variable(
-        id="acidente",
-        content="Família monoparental composta por Maria e os filhos João (12) e Marcos (10). Tinham como fonte de renda o trabalho informal de Maria, mas esta sofreu um acidente e está impossibilidade de trabalhar. Solicita-se, portanto, o auxílio vulnerabilidade.",
-        expected=["<<B>>"],
-        options=options,
-    ),
-    Variable(
-        id="remédios",
-        content="A família está com o aluguel atrasado e necessita da compra de remédios para José (48), que tem lúpus. Solicita-se, portanto, o auxílio vulnerabilidade.",
-        expected=["<<A>>"],
-        options=options,
-    ),
-    Variable(
-        id="pensão",
-        content="Família composta por Jaqueline e a filha Helena (2). Tinham como fonte de renda a pensão alimentícia de Helena. No entanto, o progenitor deixou de realizar o pagamento há dois meses. Solicita-se, portanto, o auxílio vulnerabilidade, a fim de mitigar as desproteções vividas pela família.",
-        expected=["<<B>>"],
-        options=options,
-    ),
-    Variable(
-        id="despesas_essenciais",
-        content="Família monoparental composta por Josefa e 5 filhos com idades entre 1 e 17 anos. Contam apenas com a renda de coleta de material reciclável e relatam dificuldade para manter as despesas essenciais. Solicita-se, portanto, o auxílio vulnerabilidade.",
-        expected=["<<C>>"],
-        options=options,
-    ),
+    # Variable(id="recurso parcial"),
+    # Variable(id="recurso aceito"),
+    # Variable(id="agravo negado"),
+    # Variable(id="agravo parcial"),
+    # Variable(id="agravo aceito"),
+    # Variable(id="x negado"),
+    # Variable(id="x parcial"),
+    # Variable(id="x aceito"),
+    # Variable(id="maioria"),
+    # Variable(id="modificativos"),
+    # Variable(id="conhecer nan"),
+    # Variable(id="conhecer"),
+    # Variable(
+    #     id="conhecer parcial",
+    #     content="Vistos e relatados estes autos em que são partes as acima indicadas, acordam os Ministros da PRIMEIRA TURMA do Superior Tribunal de Justiça, em sessão virtual de 26/09/2023 a 02/10/2023, por unanimidade, conhecer parcialmente do recurso, mas lhe negar provimento, nos termos do voto do Sr. Ministro Gurgel de Faria. Os Srs. Ministros Benedito Gonçalves, Sérgio Kukina, Regina Helena Costa e Paulo Sérgio Domingues votaram com o Sr. Ministro Relator. Presidiu o julgamento o Sr. Ministro Paulo Sérgio Domingues.",
+    #     expected=[
+    #         """{"resultado": "NEGADO","unanimidade": "SIM","modificativos": "NAO","conhecer": "PARCIAL","presidiu": "Paulo","ausente": null,"aFavor": Benedito, Sérgio, Regina, Paulo","vencidos": null,"lavrara": null,"desempate": null,"votoVista": null}"""
+    #     ],
+    #     options=options,
+    # ),
+    # Variable(id="nao conhecer"),
+    # Variable(id="ausente"),
+    # Variable(id="lavrara"),
+    # Variable(id="desempate"),
+    # Variable(id="voto vista 1"),
+    # Variable(id="voto vista 2"),
 ]
