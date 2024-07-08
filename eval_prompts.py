@@ -51,37 +51,5 @@ Forneça sua resposta no seguinte formato JSON:
 </answer>
 
 Preencha os valores para cada chave com base em sua análise do texto. Lembre-se de usar null se não houver informações suficientes para responder a uma determinada pergunta.""",
-    ),
-    #      Prompt(
-    #         id="v1",
-    #         slot="{variable}",
-    #         content="""Responda as seguintes perguntas sobre a seguinte certidão de julgamento. Responda em formato JSON. Caso a resposta envolva nomes, use apenas os primeiros nomes dos ministros. Sempre liste os nomes dos ministros em ordem alfabética. Caso não haja dados para necessários para responder, responda com `null`.
-    # Perguntas:
-    # 1. qual foi o resultado do julgamento? responda com "ACEITO", "PARCIAL" ou "NEGADO"
-    # 2. a certidão menciona que o julgamento foi feito em sessão virtual? responda "SIM" ou "NAO"
-    # 3. a decisão foi tomada em unanimidade? responda com "SIM" OU "NAO"
-    # 4. houve efeitos modificativos? responda "SIM", "NAO" ou null
-    # 5. houve conhecer? responda com "SIM", "PARCIAL", "NAO" ou null
-    # 6. quais ministros votaram a favor?
-    # 7. quais ministros foram vencidos?
-    # 9. quais ministros fizeram voto-vista?
-    # 8. algum ministro lavrará o acórdão?
-    # Exemplo de formato da resposta:
-    # {
-    #     "resultado": "ACEITO",
-    #     "online": "SIM",
-    #     "unanimidade": "SIM",
-    #     "modificativos": "NAO",
-    #     "conhecer": "PARCIAL",
-    #     "aFavor": "Benedito, Sérgio, Regina, Gurgel, Paulo",
-    #     "vencidos": null,
-    #     "votoVista": "Regina",
-    #     "lavrara": null
-    #     }
-    # Aqui está o texto:
-    # ###
-    # {variable}
-    # ###
-    # """,
-    #     ),
+    )
 ]

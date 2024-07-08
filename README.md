@@ -58,7 +58,11 @@ Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally if ne
 
 ## TODO
 
--   add testes complexos
+-   refactor models
+-   add poetry
+-   add report class
+-   see langchain
+-   add casos complexos
     -   executar
 -   incorporate qualitative explanation in report
 -   refactor to compartmentalize report generation

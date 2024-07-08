@@ -28,9 +28,10 @@ def main():
     start_time = time.perf_counter()
     run_id = time.strftime("%Y%m%d%H%M%S")
 
-    print()
-    print(f"CRUCIBLE PROMPT EVALUATION {run_id}")
-    print()
+    title = f"CRUCIBLE PROMPT EVALUATION {run_id}"
+    print("=" * len(title))
+    print(title)
+    print("=" * len(title))
     print(f"models: " + ", ".join([str(x.id) for x in MODELS]))
     print(f"prompts: " + ", ".join([str(x.id) for x in PROMPTS]))
     print(f"variables: " + ", ".join([str(x.id) for x in VARIABLES]))

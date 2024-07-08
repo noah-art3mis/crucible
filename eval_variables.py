@@ -2,21 +2,21 @@ from utils.my_types import Variable
 
 options = []
 
-option = """```json
+# option = """```json
 
-{
-"resultado": ,
-"online": ,
-"unanimidade": ,
-"modificativos": ,
-"conhecer": ,
-"aFavor": ,
-"vencidos": ,
-"votoVista": ,
-"lavrara":
-}
+# {
+# "resultado": ,
+# "online": ,
+# "unanimidade": ,
+# "modificativos": ,
+# "conhecer": ,
+# "aFavor": ,
+# "vencidos": ,
+# "votoVista": ,
+# "lavrara":
+# }
 
-```"""
+# ```"""
 
 
 # variables: list[Variable] = [

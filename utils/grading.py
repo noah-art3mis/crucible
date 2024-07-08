@@ -1,7 +1,7 @@
 from utils.my_types import Model, Variable, Prompt
 from utils.llm import query
 
-GRADING_MODEL = Model("gpt-4o")
+GRADING_MODEL = Model("gpt-4o", "openai")
 GRADING_PROMPT = """Rate this AI response from 0 to 10. Give a be brief one line explanation for the rating.
 
 This was the expected response:

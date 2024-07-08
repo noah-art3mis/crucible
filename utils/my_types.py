@@ -4,7 +4,8 @@ from typing import Optional
 
 @dataclass(frozen=True)
 class Model:
-    id: str
+    id: str  # llama3 | gpt-4o | haiku
+    source: str  # local | openai | anthropic
 
 
 @dataclass(frozen=True)
