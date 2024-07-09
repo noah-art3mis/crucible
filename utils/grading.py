@@ -1,5 +1,14 @@
+import re
+
 from utils.my_types import Model, Variable, Prompt
 from utils.llm import query
+from enum import Enum, auto
+
+
+class GradingType(Enum):
+    EXACT = auto()
+    QUALITATIVE = auto()
+
 
 GRADING_MODEL = Model("gpt-4o", "openai")
 GRADING_PROMPT = """Rate this AI response from 0 to 10. Give a be brief one line explanation for the rating.
@@ -50,23 +59,19 @@ Formate sua resposta da seguinte maneira:
 Certifique-se de que sua explicação seja clara e diretamente relacionada à avaliação que você fornece."""
 
 
-def grade_response(response: str, variable: Variable, grading_type: str) -> int | str:
+def grade_response(
+    response: str, variable: Variable, grading_type: GradingType
+) -> tuple[int, str]:
     match grading_type:
-        case "binary":
-            for expected in variable.expected:
-                if response in expected:
-                    return 1
-            return 0
-
-        case "json":
+        case GradingType.EXACT:
             for expected in variable.expected:
                 _response = response.replace("\n", "").replace(" ", "")
                 _expected = expected.replace("\n", "").replace(" ", "")
                 if _response in _expected:
-                    return 1
-            return 0
+                    return 10, ""
+            return 0, ""
 
-        case "qualitative":
+        case GradingType.QUALITATIVE:
             _model = GRADING_MODEL
             _variable = Variable(
                 id="grading_variable", content=response, expected=[], options=[]
@@ -83,7 +88,21 @@ def grade_response(response: str, variable: Variable, grading_type: str) -> int 
                 temp=0,
                 danger_mode=True,
             )
-            return response
+            return parse_grading(response)
 
         case _:
             raise ValueError(f"Unknown grading type: {grading_type}")
+
+
+def parse_grading(grading: str) -> tuple[int, str]:
+
+    grade_tags = r"<rating>(.*?)</rating>"
+    info_tags = r"<explanation>(.*?)</explanation>"
+
+    rating_match = re.search(grade_tags, grading, re.DOTALL)
+    info_match = re.search(info_tags, grading, re.DOTALL)
+
+    grade_text = rating_match.group(1).strip() if rating_match else "<<ERROR>>"
+    info_text = info_match.group(1).strip() if info_match else "<<ERROR>>"
+
+    return (int(grade_text), info_text)

@@ -6,63 +6,43 @@ import ollama
 from eval_prompts import prompts
 from eval_variables import variables
 from eval_models import models
-
-from utils.my_types import Result, Model
+from utils.my_types import Result
+from utils.grading import GradingType
+from utils.runner import Runner
 
 from utils.llm import query
 from utils.grading import grade_response
-from utils.display import print_data, generate_and_show_summary
 from utils.validation import check_exists
 from utils.io import save_logs
-
 
 MODELS = models
 PROMPTS = prompts
 VARIABLES = variables
 TEMPERATURE = 0.0
 DANGER_MODE = True  # does not ask permission about prices; use with care.
-GRADING_TYPE = "qualitative"  # qualitative uses gpt4o; use with care.
+GRADING_TYPE = GradingType.QUALITATIVE  # qualitative uses gpt4o; use with care.
 
 
 def main():
     start_time = time.perf_counter()
     run_id = time.strftime("%Y%m%d%H%M%S")
-
     title = f"CRUCIBLE PROMPT EVALUATION {run_id}"
-    print("=" * len(title))
-    print(title)
-    print("=" * len(title))
-    print(f"models: " + ", ".join([str(x.id) for x in MODELS]))
-    print(f"prompts: " + ", ".join([str(x.id) for x in PROMPTS]))
-    print(f"variables: " + ", ".join([str(x.id) for x in VARIABLES]))
-    total_cases = len(MODELS) * len(PROMPTS) * len(VARIABLES)
-    print(f"total cases: {total_cases}")
-    print()
 
     check_exists(MODELS, PROMPTS, VARIABLES)
 
-    print_data(
-        "case",
-        "model",
-        "prompt",
-        "variable",
-        "case_id",
-        "grade",
-        MODELS,
-        PROMPTS,
-        VARIABLES,
-    )
+    runner = Runner(title, MODELS, PROMPTS, VARIABLES, GRADING_TYPE)
+    runner.start()
+    runner.print_header()
 
-    outputs: list[Result] = []
-    counter = 0
     for model in MODELS:
         for prompt in PROMPTS:
             for variable in VARIABLES:
                 start_query_time = time.perf_counter()
-                case_id = uuid.uuid4().hex
+
                 result = Result(
-                    id=case_id,
-                    model=model.id,
+                    run_id=run_id,
+                    case_id=uuid.uuid4().hex,
+                    model_id=model.id,
                     prompt_id=prompt.id,
                     variable_id=variable.id,
                     expected=variable.expected,
@@ -70,22 +50,13 @@ def main():
 
                 try:
                     response = query(model, prompt, variable, TEMPERATURE, DANGER_MODE)
-                    grade = grade_response(response, variable, GRADING_TYPE)
+                    grade, info = grade_response(response, variable, GRADING_TYPE)
 
                     result.response = response
                     result.grade = grade
+                    result.info = info
 
-                    print_data(
-                        f"{counter}/{total_cases}",
-                        model.id,
-                        prompt.id,
-                        variable.id,
-                        case_id,
-                        str(grade).replace("\n", " "),
-                        MODELS,
-                        PROMPTS,
-                        VARIABLES,
-                    )
+                    runner.print_result(result)
 
                 except ollama.ResponseError as e:
                     result.response = response
@@ -97,26 +68,10 @@ def main():
                 finally:
                     _time = round(time.perf_counter() - start_query_time, 2)
                     result.time_elapsed = _time
-                    outputs.append(result)
-                    save_logs(outputs, run_id)
-                    counter += 1
+                    runner.report.results.append(result)
+                    save_logs(runner.report, run_id)
 
-    print()
-    print("SUMMARY")
-    print()
-    print("BY MODEL")
-    generate_and_show_summary(outputs, MODELS, GRADING_TYPE)
-    print()
-    print("BY PROMPT")
-    generate_and_show_summary(outputs, PROMPTS, GRADING_TYPE)
-    print()
-    print("BY VARIABLE")
-    generate_and_show_summary(outputs, VARIABLES, GRADING_TYPE)
-    print()
-    print("BY EXPECTED")
-    print("todo")
-    # generate_and_show_summary(outputs, VARIABLES)
-    print()
+    runner.print_report()
     print(f"Time taken: {time.perf_counter() - start_time:.0f} seconds")
     print(f"Saved logs to: outputs/{run_id}")
 

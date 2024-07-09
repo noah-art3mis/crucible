@@ -60,17 +60,7 @@ Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally if ne
 
 -   refactor models
 -   add poetry
--   add report class
--   see langchain
--   add casos complexos
-    -   executar
--   incorporate qualitative explanation in report
--   refactor to compartmentalize report generation
--   make expected a str
--   add tests
--   fix grading percentages
 -   add [asyncio](https://github.com/ollama/ollama-python?tab=readme-ov-file#async-client)
--   add details on which answers tend to be wrong. summary expected
 
 ## Resources
 
