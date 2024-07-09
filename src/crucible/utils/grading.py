@@ -1,8 +1,8 @@
 import re
+from enum import Enum, auto
 
 from utils.my_types import Model, Variable, Prompt
 from utils.llm import query
-from enum import Enum, auto
 
 
 class GradingType(Enum):

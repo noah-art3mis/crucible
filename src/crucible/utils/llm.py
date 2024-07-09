@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import ollama
 import anthropic
 from openai import OpenAI
+
 from utils.my_types import Model, Prompt, Variable
 from utils.openai import (
     estimate_costs,

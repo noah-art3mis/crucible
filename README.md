@@ -59,7 +59,6 @@ Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally if ne
 ## TODO
 
 -   refactor models
--   add poetry
 -   add [asyncio](https://github.com/ollama/ollama-python?tab=readme-ov-file#async-client)
 
 ## Resources

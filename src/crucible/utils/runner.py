@@ -1,7 +1,5 @@
-import re
-from utils.my_types import BaseEntity, Model, Prompt, Variable, Result, Report
+from utils.my_types import Model, Prompt, Variable, Result, Report
 from utils.grading import GradingType
-import copy
 
 
 class Runner:
