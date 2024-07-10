@@ -1,7 +1,7 @@
-from crucible.utils.my_types import Model
+from crucible.utils.Model import OpenAIModel
 
 
-GRADING_MODEL = Model("gpt-4o", "openai")
+GRADING_MODEL = OpenAIModel("gpt-4o")
 
 GRADING_PROMPT = """Sua tarefa é avaliar uma resposta de IA em uma escala de 0 a 10 e fornecer uma breve explicação para sua avaliação. Você receberá uma resposta esperada e a resposta real da IA para comparar.
 

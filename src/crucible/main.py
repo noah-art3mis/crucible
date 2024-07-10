@@ -10,7 +10,7 @@ from crucible.utils.my_types import Result
 from crucible.utils.grading import GradingType
 from crucible.utils.Runner import Runner
 
-from crucible.utils.llm import query
+from crucible.utils.Model import Model
 from crucible.utils.grading import grade_response
 from crucible.utils.validation import check_exists
 from crucible.utils.io import save_logs, load_models, load_prompts, load_variables
@@ -50,7 +50,7 @@ def main():
                 )
 
                 try:
-                    response = query(model, prompt, variable, TEMPERATURE, DANGER_MODE)
+                    response = model.query(prompt, variable, TEMPERATURE, DANGER_MODE)
                     grade, info = grade_response(response, variable, GRADING_TYPE)
 
                     result.response = response
@@ -73,6 +73,7 @@ def main():
                     save_logs(runner.report, run_id)
 
     runner.print_report()
+    print()
     print(f"Time elapsed: {time.perf_counter() - start_time:.0f} seconds")
     print(f"Saved logs to: outputs/{run_id}")
 

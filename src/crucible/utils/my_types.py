@@ -1,15 +1,16 @@
 from dataclasses import dataclass
-from crucible.utils.Model import Model
 
 
 @dataclass(frozen=True)
 class Prompt:
+    id: str
     slot: str
     content: str
 
 
 @dataclass(frozen=True)
 class Variable:
+    id: str
     content: str
     expected: list[str]
     options: list[str] | None = None
@@ -34,11 +35,3 @@ class Report:
     def __init__(self):
         self.header: str = ""
         self.results: list[Result] = []
-
-
-@dataclass()
-class Task:
-    options: list[str] | None
-    models: list[Model] | None
-    prompts: list[Prompt] | None
-    variables: list[Variable] | None

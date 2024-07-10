@@ -2,8 +2,8 @@ import re
 from enum import Enum, auto
 
 from crucible.utils.my_types import Variable, Prompt
-from crucible.utils.llm import query
 from crucible.utils.grading_config import GRADING_MODEL, GRADING_PROMPT
+from crucible.utils.Model import Model
 
 
 class GradingType(Enum):
@@ -39,8 +39,7 @@ def grade_response(
                 content=GRADING_PROMPT.replace("{expected}", variable.expected[0]),
             )
 
-            response = query(
-                model=_model,
+            response = _model.query(
                 prompt=_prompt,
                 variable=_variable,
                 temp=0,

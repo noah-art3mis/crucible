@@ -22,25 +22,25 @@ variables_: list[Variable] = [
 ```"""
         ],
     ),
-    Variable(
-        id="recurso negado",
-        content="Processo: 2089458 | Ministro Relator: GURGEL DE FARIA | Certid\u00e3o de Julgamento: Vistos e relatados estes autos em que s\u00e3o partes as acima indicadas, acordam os Ministros da PRIMEIRA TURMA do Superior Tribunal de Justi\u00e7a, em sess\u00e3o virtual de 26/09/2023 a 02/10/2023, por unanimidade, negar provimento ao recurso, nos termos do voto do Sr. Ministro Relator. Os Srs. Ministros Benedito Gon\u00e7alves, S\u00e9rgio Kukina, Regina Helena Costa e Paulo S\u00e9rgio Domingues votaram com o Sr. Ministro Relator. Presidiu o julgamento o Sr. Ministro Paulo S\u00e9rgio Domingues.",
-        expected=[
-            """```json
-    {
-    "resultado": "NEGADO",
-    "online": "SIM",
-    "unanimidade": "SIM",
-    "modificativos": null,
-    "conhecer": null,
-    "aFavor": "Benedito, Gurgel, Paulo, Regina, Sérgio",
-    "vencidos": null,
-    "votoVista": null,
-    "lavrara": null
-    }
-    ```"""
-        ],
-    ),
+    # Variable(
+    #     id="recurso negado",
+    #     content="Processo: 2089458 | Ministro Relator: GURGEL DE FARIA | Certid\u00e3o de Julgamento: Vistos e relatados estes autos em que s\u00e3o partes as acima indicadas, acordam os Ministros da PRIMEIRA TURMA do Superior Tribunal de Justi\u00e7a, em sess\u00e3o virtual de 26/09/2023 a 02/10/2023, por unanimidade, negar provimento ao recurso, nos termos do voto do Sr. Ministro Relator. Os Srs. Ministros Benedito Gon\u00e7alves, S\u00e9rgio Kukina, Regina Helena Costa e Paulo S\u00e9rgio Domingues votaram com o Sr. Ministro Relator. Presidiu o julgamento o Sr. Ministro Paulo S\u00e9rgio Domingues.",
+    #     expected=[
+    #         """```json
+    # {
+    # "resultado": "NEGADO",
+    # "online": "SIM",
+    # "unanimidade": "SIM",
+    # "modificativos": null,
+    # "conhecer": null,
+    # "aFavor": "Benedito, Gurgel, Paulo, Regina, Sérgio",
+    # "vencidos": null,
+    # "votoVista": null,
+    # "lavrara": null
+    # }
+    # ```"""
+    #     ],
+    # ),
     #     # Variable(id="recurso parcial", content="", expected=[], options=options),
     #     # Variable(id="recurso aceito", content="", expected=[], options=options),
     #     # Variable(id="agravo negado", content="", expected=[], options=options),

@@ -1,7 +1,7 @@
-from crucible.utils.my_types import Model
+from crucible.utils.Model import OpenAIModel, AnthropicModel, LocalModel, Model
 
 models_: list[Model] = [
-    # Model("llama3", "local"),
-    Model("gpt-4o", "openai"),
-    Model("claude-3-haiku-20240307", "anthropic"),
+    OpenAIModel("gpt-4o"),
+    AnthropicModel("claude-3-haiku-20240307"),
+    LocalModel("llama3"),
 ]
