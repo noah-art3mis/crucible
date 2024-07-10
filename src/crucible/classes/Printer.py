@@ -1,8 +1,12 @@
+import sys
 import time
 import yaml
-from crucible.utils.Model import Model
+from crucible.classes.Model import Model
+from crucible.classes.Task import Task
 from crucible.utils.grading import GradingType
-from crucible.utils.my_types import Prompt, Variable, Result, Report
+from crucible.classes.Report import Result, Report
+from crucible.classes.Variable import Variable
+from crucible.classes.Prompt import Prompt
 
 
 class Printer:
@@ -61,6 +65,18 @@ class Printer:
         header = "| ".join(results)
         print(header)
 
+    def calculate_costs_all(self, tasks: list[Task], danger_mode: bool = False) -> None:
+        total_cost = 0.0
+        for task in tasks:
+            messages = task.model.build_messages(task.prompt, task.variable)
+            n_tokens = task.model.get_n_tokens(str(messages))
+            task_cost = task.model.estimate_costs(n_tokens)
+            total_cost += task_cost
+
+        if not danger_mode:
+            if not self._ask_permission(total_cost):
+                sys.exit(0)
+
     def print_result(self, result: Result) -> None:
         padding = 1
         max_chars = 100
@@ -72,9 +88,9 @@ class Printer:
         max_widths = {
             case: len("99/99"),
             str(result.grade): len("grade"),
-            result.model_id: self._get_len("model", self.models),
-            result.prompt_id: self._get_len("prompt", self.prompts),
-            result.variable_id: self._get_len("variable", self.variables),
+            result.task.model.id: self._get_len("model", self.models),
+            result.task.prompt.id: self._get_len("prompt", self.prompts),
+            result.task.variable.id: self._get_len("variable", self.variables),
             info: len("info"),
         }
 
@@ -84,11 +100,12 @@ class Printer:
         self.current_case += 1
         print(data)
 
-    def print_report(self) -> None:
+    def print_report(self, run_id: str) -> None:
         print("\nREPORT\n")
         self._model_report()
         self._prompt_report()
         self._variable_report()
+        print(f"Saved logs to: outputs/{run_id}")
 
     def compute_time(self) -> None:
         print(f"Time elapsed: {time.perf_counter() - self.start_time:.0f} seconds")
@@ -98,7 +115,6 @@ class Printer:
             yaml.dump(
                 self.report.results, f, indent=2, allow_unicode=True, sort_keys=False
             )
-        print(f"Saved logs to: outputs/{run_id}")
 
     def _get_len(
         self, category_name: str, var: list[Model] | list[Prompt] | list[Variable]
@@ -109,19 +125,21 @@ class Printer:
     def _model_report(self) -> None:
         print("BY MODEL")
         for model in self.models:
-            models = [x for x in self.report.results if x.model_id == model.id]
+            models = [x for x in self.report.results if x.task.model.id == model.id]
             self._partial_result(model.id, models)
 
     def _prompt_report(self) -> None:
         print("BY PROMPT")
         for prompt in self.prompts:
-            prompts = [x for x in self.report.results if x.prompt_id == prompt.id]
+            prompts = [x for x in self.report.results if x.task.prompt.id == prompt.id]
             self._partial_result(prompt.id, prompts)
 
     def _variable_report(self) -> None:
         print("BY VARIABLE")
         for variable in self.variables:
-            variables = [x for x in self.report.results if x.variable_id == variable.id]
+            variables = [
+                x for x in self.report.results if x.task.variable.id == variable.id
+            ]
             self._partial_result(variable.id, variables)
 
     def _partial_result(self, name: str, cases: list[Result]) -> None:
@@ -130,3 +148,18 @@ class Printer:
         sum_grades = sum(x.grade for x in cases if x.grade is not None)
         percentage = sum_grades / total_max_grade
         print(f"\t{name}: {sum_grades}/{total_max_grade} ({percentage * 100:.0f}%)")
+
+    def _ask_permission(self, total_cost: float) -> bool:
+        while True:
+            print(f"This will cost around ${total_cost:.2f}.")
+            response = (
+                input("Are you sure you want to continue? (y/n): ").strip().lower()
+            )
+            if response == "y":
+                print("Permission granted. Continuing...")
+                return True
+            elif response == "n":
+                print("Permission denied. Exiting...")
+                return False
+            else:
+                print("Invalid input. Please enter 'y' or 'n'.")

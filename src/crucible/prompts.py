@@ -1,4 +1,4 @@
-from crucible.utils.my_types import Prompt
+from crucible.classes.Prompt import Prompt
 
 prompts_: list[Prompt] = [
     Prompt(

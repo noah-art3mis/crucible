@@ -1,5 +1,5 @@
 from typing import Iterable
-from crucible.utils.my_types import Model, Prompt, Variable
+from crucible.classes.Report import Model, Prompt, Variable
 import ollama
 
 

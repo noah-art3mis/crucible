@@ -1,4 +1,4 @@
-from crucible.utils.my_types import Variable
+from crucible.classes.Variable import Variable
 
 variables_: list[Variable] = [
     Variable(

@@ -4,13 +4,14 @@ import time
 from crucible.prompts import prompts_
 from crucible.variables import variables_
 from crucible.models import models_
-from crucible.utils.my_types import Result
+from crucible.classes.Report import Result
 from crucible.utils.grading import GradingType
-from crucible.utils.Printer import Printer
+from crucible.classes.Printer import Printer
+from crucible.classes.Task import Task
 
 from crucible.utils.grading import grade_response
 from crucible.utils.validation import check_exists
-from crucible.utils.io import save_logs, load_models, load_prompts, load_variables
+from crucible.utils.io import load_models, load_prompts, load_variables
 
 GRADING_TYPE = GradingType.QUALITATIVE  # qualitative uses gpt4o; use with care.
 TEMPERATURE = 0.0
@@ -29,39 +30,56 @@ def main():
 
     printer = Printer(title, MODELS, PROMPTS, VARIABLES, GRADING_TYPE)
     printer.start()
-    printer.print_header()
 
+    tasks = []
     for model in MODELS:
         for prompt in PROMPTS:
             for variable in VARIABLES:
-                start_query_time = time.perf_counter()
 
-                result = Result(
+                task = Task(
                     run_id=run_id,
-                    case_id=uuid.uuid4().hex,
-                    model_id=model.id,
-                    prompt_id=prompt.id,
-                    variable_id=variable.id,
+                    task_id=uuid.uuid4().hex,
+                    model=model,
+                    prompt=prompt,
+                    variable=variable,
                     expected=variable.expected,
                 )
 
-                try:
-                    response = model.query(prompt, variable, TEMPERATURE, DANGER_MODE)
-                    grade, info = grade_response(response, variable, GRADING_TYPE)
+                tasks.append(task)
 
-                    result.response = response
-                    result.grade = grade
-                    result.info = info
+    printer.calculate_costs_all(tasks, DANGER_MODE)
+    printer.print_header()
 
-                    printer.print_result(result)
+    for task in tasks:
+        try:
+            start_query_time = time.perf_counter()
+            response = model.query(prompt, variable, TEMPERATURE, DANGER_MODE)
+            grade, info = grade_response(response, variable, GRADING_TYPE)
 
-                finally:
-                    _time = round(time.perf_counter() - start_query_time, 2)
-                    result.time_elapsed = _time
-                    printer.report.results.append(result)
-                    printer.save_report(run_id)
+            result = Result(
+                task=task,
+                response=response,
+                grade=grade,
+                info=info,
+                time_elapsed=round(time.perf_counter() - start_query_time, 2),
+            )
 
-    printer.print_report()
+        except Exception as e:
+            result = Result(
+                task=task,
+                response=None,
+                grade=None,
+                info=None,
+                time_elapsed=round(time.perf_counter() - start_query_time, 2),
+                error=str(e),
+            )
+
+        finally:
+            printer.print_result(result)
+            printer.report.results.append(result)
+            printer.save_report(run_id)
+
+    printer.print_report(run_id)
     printer.compute_time()
     print()
 

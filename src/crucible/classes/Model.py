@@ -1,4 +1,3 @@
-import sys
 from enum import Enum, auto
 from abc import ABC, abstractmethod
 
@@ -8,7 +7,8 @@ import anthropic
 from openai import OpenAI
 from dotenv import load_dotenv
 
-from crucible.utils.my_types import Prompt, Variable
+from crucible.classes.Prompt import Prompt
+from crucible.classes.Variable import Variable
 
 
 class Source(Enum):
@@ -24,11 +24,11 @@ class Model(ABC):
         self.id = id
 
     @abstractmethod
-    def _estimate_costs(self, n_tokens: int) -> None:
+    def estimate_costs(self, n_tokens: int) -> float:
         pass
 
     @abstractmethod
-    def _get_n_tokens(self, text: str) -> int:
+    def get_n_tokens(self, text: str) -> int:
         encoding = tiktoken.get_encoding("cl100k_base")
         tokenized = encoding.encode(text)
         n_tokens = len(tokenized)
@@ -52,26 +52,12 @@ class Model(ABC):
     ) -> str:
         pass
 
-    def _build_messages(
+    def build_messages(
         self, prompt: Prompt, variable: Variable
     ) -> list[dict[str, str]]:
         # TODO
         text = prompt.content.replace(prompt.slot, variable.content)
         return [{"role": "user", "content": text}]
-
-    def _ask_permission(self) -> bool:
-        while True:
-            response = (
-                input("Are you sure you want to continue? (y/n): ").strip().lower()
-            )
-            if response == "y":
-                print("Permission granted. Continuing...")
-                return True
-            elif response == "n":
-                print("Permission denied. Exiting...")
-                return False
-            else:
-                print("Invalid input. Please enter 'y' or 'n'.")
 
 
 class OpenAIModel(Model):
@@ -82,14 +68,14 @@ class OpenAIModel(Model):
         self.omni_output = 15.0 / 1_000_000
 
     # override
-    def _estimate_costs(self, n_tokens: int) -> None:
+    def estimate_costs(self, n_tokens: int) -> float:
         input_cost = n_tokens * self.omni_input
         output_cost = n_tokens * self.omni_output
         total_cost = input_cost + output_cost
-        print(f"Estimated Cost: {n_tokens} + {n_tokens} =  ${total_cost:.2f}")
+        return total_cost
 
     # override
-    def _get_n_tokens(self, text: str) -> int:
+    def get_n_tokens(self, text: str) -> int:
         encoding = tiktoken.encoding_for_model(self.id)
         tokenized = encoding.encode(text)
         n_tokens = len(tokenized)
@@ -118,16 +104,7 @@ class OpenAIModel(Model):
 
     # override
     def query(self, prompt: Prompt, variable: Variable, temp: float, danger_mode: bool):
-
-        messages = self._build_messages(prompt, variable)
-        n_tokens = self._get_n_tokens(str(messages))
-
-        if not danger_mode:
-            self._estimate_costs(n_tokens)
-
-            if not self._ask_permission():
-                sys.exit(0)
-
+        messages = self.build_messages(prompt, variable)
         response = self._get_completion(messages, temp)
 
         if not danger_mode:
@@ -148,15 +125,15 @@ class AnthropicModel(Model):
         self.haiku_output = 1.25 / 1_000_000
 
     # override
-    def _estimate_costs(self, n_tokens: int):
+    def estimate_costs(self, n_tokens: int) -> float:
         input_cost = n_tokens * self.haiku_input
         output_cost = n_tokens * self.haiku_output
         total_cost = input_cost + output_cost
-        print(f"Estimated Cost: {n_tokens} + {n_tokens} =  ${total_cost:.2f}")
+        return total_cost
 
     # override
-    def _get_n_tokens(self, text: str) -> int:
-        return super()._get_n_tokens(text)
+    def get_n_tokens(self, text: str) -> int:
+        return super().get_n_tokens(text)
 
     # override
     def _get_actual_costs(self, response: object) -> None:
@@ -182,16 +159,7 @@ class AnthropicModel(Model):
 
     # override
     def query(self, prompt: Prompt, variable: Variable, temp: float, danger_mode: bool):
-
-        messages = self._build_messages(prompt, variable)
-        n_tokens = self._get_n_tokens(str(messages))
-
-        if not danger_mode:
-            self._estimate_costs(n_tokens)
-
-            if not self._ask_permission():
-                sys.exit(0)
-
+        messages = self.build_messages(prompt, variable)
         response = self._get_completion(messages, temp)
 
         if not danger_mode:
@@ -210,12 +178,12 @@ class LocalModel(Model):
         self.source = Source.LOCAL
 
     # override
-    def _estimate_costs(self, n_tokens: int):
-        print(f"Estimated Cost: free!")
+    def estimate_costs(self, n_tokens: int) -> float:
+        return 0.0
 
     # override
-    def _get_n_tokens(self, text: str) -> int:
-        return super()._get_n_tokens(text)
+    def get_n_tokens(self, text: str) -> int:
+        return super().get_n_tokens(text)
 
     # override
     def _get_actual_costs(self, response: object):
@@ -231,8 +199,12 @@ class LocalModel(Model):
 
     # override
     def query(self, prompt: Prompt, variable: Variable, temp: float, danger_mode: bool):
-        messages = self._build_messages(prompt, variable)
+        messages = self.build_messages(prompt, variable)
         response = self._get_completion(messages, temp)
+
+        if not danger_mode:
+            self._get_actual_costs(response)
+
         return self._parse_completion(response)
 
     # override

@@ -57,10 +57,8 @@ Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally if ne
 
 ## TODO
 
--   create job class
--   separate printer and printer
--   add model nickname
--   refactor Model for deduplication
+-   add actual cost to result
+-   turn query into an interface
 -   save logs in yaml?
 -   add [asyncio](https://github.com/ollama/ollama-python?tab=readme-ov-file#async-client)
 

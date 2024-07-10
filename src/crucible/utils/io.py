@@ -1,9 +1,6 @@
-import yaml
-from crucible.utils.my_types import Report, Prompt, Variable
-from crucible.utils.Model import Model
-
-
-
+from crucible.classes.Model import Model
+from crucible.classes.Prompt import Prompt
+from crucible.classes.Variable import Variable
 
 
 def load_models(models: list[Model]):
