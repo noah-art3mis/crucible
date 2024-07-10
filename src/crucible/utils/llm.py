@@ -5,8 +5,9 @@ import ollama
 import anthropic
 from openai import OpenAI
 
-from utils.my_types import Model, Prompt, Variable
-from utils.openai import (
+from crucible.utils.my_types import Prompt, Variable
+from crucible.utils.Model import Model
+from crucible.utils.openai import (
     estimate_costs,
     get_n_tokens,
     get_actual_costs,

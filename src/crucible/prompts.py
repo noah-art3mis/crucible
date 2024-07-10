@@ -1,6 +1,6 @@
-from utils.my_types import Prompt
+from crucible.utils.my_types import Prompt
 
-prompts: list[Prompt] = [
+prompts_: list[Prompt] = [
     Prompt(
         id="v5",
         slot="{variable}",

@@ -1,5 +1,6 @@
-from utils.my_types import Model, Prompt, Variable, Result, Report
-from utils.grading import GradingType
+from crucible.utils.my_types import Prompt, Variable, Result, Report
+from crucible.utils.grading import GradingType
+from crucible.utils.Model import Model
 
 
 class Runner:

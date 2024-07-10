@@ -1,49 +1,6 @@
-from utils.my_types import Variable
+from crucible.utils.my_types import Variable
 
-options = []
-
-# option = """```json
-
-# {
-# "resultado": ,
-# "online": ,
-# "unanimidade": ,
-# "modificativos": ,
-# "conhecer": ,
-# "aFavor": ,
-# "vencidos": ,
-# "votoVista": ,
-# "lavrara":
-# }
-
-# ```"""
-
-
-# variables: list[Variable] = [
-# Variable(id="sessao presencial", content="", expected=[], options=options),
-# Variable(id="recurso negado", content="", expected=[], options=options),
-# Variable(id="recurso parcial", content="", expected=[], options=options),
-# Variable(id="recurso aceito", content="", expected=[], options=options),
-# Variable(id="agravo negado", content="", expected=[], options=options),
-# Variable(id="agravo parcial", content="", expected=[], options=options),
-# Variable(id="agravo aceito", content="", expected=[], options=options),
-# Variable(id="embargo negado (rejeitado)", content="", expected=[], options=options),
-# Variable(id="embargo parcial", content="", expected=[], options=options),
-# Variable(id="embargo aceito (acolhido)", content="", expected=[], options=options),
-# Variable(id="unanime", content="", expected=[], options=options),
-# Variable(id="maioria", content="", expected=[], options=options),
-# Variable(id="modificativos sim", content="", expected=[], options=options),
-# Variable(id="modificativos nao", content="", expected=[], options=options),
-# Variable(id="modificativos null", content="", expected=[], options=options),
-# Variable(id="conhecer sim", content="", expected=[], options=options),
-# Variable(id="conhecer parcial", content="", expected=[], options=options),
-# Variable(id="conhecer nao", content="", expected=[], options=options),
-# Variable(id="conhecer null", content="", expected=[], options=options),
-# Variable(id="lavrara", content="", expected=[], options=options),
-# Variable(id="voto vista", content="", expected=[], options=options),
-# ]
-
-variables: list[Variable] = [
+variables_: list[Variable] = [
     Variable(
         id="sessao presencial",
         content="Processo: 366017 | Ministro Relator: PAULO S\u00c9RGIO DOMINGUES | Certid\u00e3o de Julgamento: Vistos e relatados estes autos em que s\u00e3o partes as acima indicadas, acordam os Ministros da Primeira Turma, por unanimidade, negar provimento ao agravo interno, em ju\u00edzo de retrata\u00e7\u00e3o, nos termos do voto do Sr. Ministro Relator. Os Srs. Ministros Benedito Gon\u00e7alves, S\u00e9rgio Kukina, Regina Helena Costa e Gurgel de Faria votaram com o Sr. Ministro Relator.",
@@ -64,7 +21,6 @@ variables: list[Variable] = [
 
 ```"""
         ],
-        options=options,
     ),
     Variable(
         id="recurso negado",
@@ -84,7 +40,6 @@ variables: list[Variable] = [
     }
     ```"""
         ],
-        options=options,
     ),
     #     # Variable(id="recurso parcial", content="", expected=[], options=options),
     #     # Variable(id="recurso aceito", content="", expected=[], options=options),
@@ -108,7 +63,7 @@ variables: list[Variable] = [
     # }
     # ```"""
     #         ],
-    #         options=options,
+    #
     #     ),
     #     # Variable(id="embargo negado (rejeitado)", content="", expected=[], options=options),
     #     Variable(
@@ -129,7 +84,7 @@ variables: list[Variable] = [
     # }
     # ```"""
     #         ],
-    #         options=options,
+    #
     #     ),
     #     # Variable(id="embargo aceito (acolhido)", content="", expected=[], options=options),
     #     Variable(
@@ -150,7 +105,7 @@ variables: list[Variable] = [
     # }
     # ```"""
     #         ],
-    #         options=options,
+    #
     #     ),
     #     # Variable(id="modificativos sim", content="", expected=[], options=options),
     #     Variable(
@@ -171,7 +126,7 @@ variables: list[Variable] = [
     # }
     # ```"""
     #         ],
-    #         options=options,
+    #
     #     ),
     #     # Variable(id="modificativos null", content="", expected=[], options=options),
     #     Variable(
@@ -192,7 +147,7 @@ variables: list[Variable] = [
     # }
     # ```"""
     #         ],
-    #         options=options,
+    #
     #     ),
     #     Variable(
     #         id="conhecer parcial",
@@ -212,7 +167,7 @@ variables: list[Variable] = [
     # }
     # ```"""
     #         ],
-    #         options=options,
+    #
     #     ),
     #     Variable(
     #         id="conhecer nao",
@@ -232,7 +187,7 @@ variables: list[Variable] = [
     # }
     # """
     #         ],
-    #         options=options,
+    #
     #     ),
     #     # Variable(id="conhecer null", content="", expected=[], options=options),
     #     # Variable(id="nao conhecer", content="", expected=[], options=options),
@@ -255,6 +210,6 @@ variables: list[Variable] = [
     # }
     # ```"""
     #         ],
-    #         options=options,
+    #
     #     ),
 ]

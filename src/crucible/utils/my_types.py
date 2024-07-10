@@ -1,27 +1,18 @@
 from dataclasses import dataclass
+from crucible.utils.Model import Model
 
 
 @dataclass(frozen=True)
-class BaseEntity:
-    id: str
-
-
-@dataclass(frozen=True)
-class Model(BaseEntity):
-    source: str  # local | openai | anthropic
-
-
-@dataclass(frozen=True)
-class Prompt(BaseEntity):
+class Prompt:
     slot: str
     content: str
 
 
 @dataclass(frozen=True)
-class Variable(BaseEntity):
+class Variable:
     content: str
     expected: list[str]
-    options: list[str] | None
+    options: list[str] | None = None
 
 
 @dataclass(order=True)
