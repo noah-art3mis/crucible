@@ -1,9 +1,11 @@
-from crucible.utils.my_types import Prompt, Variable, Result, Report
-from crucible.utils.grading import GradingType
+import time
+import yaml
 from crucible.utils.Model import Model
+from crucible.utils.grading import GradingType
+from crucible.utils.my_types import Prompt, Variable, Result, Report
 
 
-class Runner:
+class Printer:
 
     def __init__(
         self,
@@ -21,8 +23,9 @@ class Runner:
         self.current_case = 1
         self.report = Report()
         self.grading_type = grading_type
+        self.start_time = time.perf_counter()
 
-    def start(self):
+    def start(self) -> None:
         content = []
 
         content.append("\n")
@@ -39,10 +42,10 @@ class Runner:
 
         for item in content:
             print(item)
-            self.report.header += item
+            self.report.header += item + "\n"
         print()
 
-    def print_header(self):
+    def print_header(self) -> None:
 
         max_widths = {
             "case": len("99/99"),
@@ -58,7 +61,7 @@ class Runner:
         header = "| ".join(results)
         print(header)
 
-    def print_result(self, result: Result):
+    def print_result(self, result: Result) -> None:
         padding = 1
         max_chars = 100
 
@@ -81,37 +84,47 @@ class Runner:
         self.current_case += 1
         print(data)
 
+    def print_report(self) -> None:
+        print("\nREPORT\n")
+        self._model_report()
+        self._prompt_report()
+        self._variable_report()
+
+    def compute_time(self) -> None:
+        print(f"Time elapsed: {time.perf_counter() - self.start_time:.0f} seconds")
+
+    def save_report(self, run_id: str) -> None:
+        with open(f"outputs/{run_id}.yaml", "w", encoding="utf-8") as f:
+            yaml.dump(
+                self.report.results, f, indent=2, allow_unicode=True, sort_keys=False
+            )
+        print(f"Saved logs to: outputs/{run_id}")
+
     def _get_len(
         self, category_name: str, var: list[Model] | list[Prompt] | list[Variable]
     ) -> int:
         largest_name_in_list = max(len(str(x.id)) for x in var)
         return max(len(category_name), largest_name_in_list)
 
-    def print_report(self):
-        print("\nREPORT\n")
-        self._model_report()
-        self._prompt_report()
-        self._variable_report()
-
-    def _model_report(self):
+    def _model_report(self) -> None:
         print("BY MODEL")
         for model in self.models:
             models = [x for x in self.report.results if x.model_id == model.id]
             self._partial_result(model.id, models)
 
-    def _prompt_report(self):
+    def _prompt_report(self) -> None:
         print("BY PROMPT")
         for prompt in self.prompts:
             prompts = [x for x in self.report.results if x.prompt_id == prompt.id]
             self._partial_result(prompt.id, prompts)
 
-    def _variable_report(self):
+    def _variable_report(self) -> None:
         print("BY VARIABLE")
         for variable in self.variables:
             variables = [x for x in self.report.results if x.variable_id == variable.id]
             self._partial_result(variable.id, variables)
 
-    def _partial_result(self, name: str, cases: list[Result]):
+    def _partial_result(self, name: str, cases: list[Result]) -> None:
         MAX_GRADE = 10
         total_max_grade = MAX_GRADE * len(cases)
         sum_grades = sum(x.grade for x in cases if x.grade is not None)

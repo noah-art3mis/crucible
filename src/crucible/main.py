@@ -1,27 +1,23 @@
 import uuid
 import time
 
-import ollama
-
 from crucible.prompts import prompts_
 from crucible.variables import variables_
 from crucible.models import models_
 from crucible.utils.my_types import Result
 from crucible.utils.grading import GradingType
-from crucible.utils.Runner import Runner
+from crucible.utils.Printer import Printer
 
-from crucible.utils.Model import Model
 from crucible.utils.grading import grade_response
 from crucible.utils.validation import check_exists
 from crucible.utils.io import save_logs, load_models, load_prompts, load_variables
 
+GRADING_TYPE = GradingType.QUALITATIVE  # qualitative uses gpt4o; use with care.
 TEMPERATURE = 0.0
 DANGER_MODE = True  # does not ask permission about prices; use with care.
-GRADING_TYPE = GradingType.QUALITATIVE  # qualitative uses gpt4o; use with care.
 
 
 def main():
-    start_time = time.perf_counter()
     run_id = time.strftime("%Y%m%d%H%M%S")
     title = f"CRUCIBLE PROMPT EVALUATION {run_id}"
 
@@ -31,9 +27,9 @@ def main():
 
     check_exists(MODELS, PROMPTS, VARIABLES)
 
-    runner = Runner(title, MODELS, PROMPTS, VARIABLES, GRADING_TYPE)
-    runner.start()
-    runner.print_header()
+    printer = Printer(title, MODELS, PROMPTS, VARIABLES, GRADING_TYPE)
+    printer.start()
+    printer.print_header()
 
     for model in MODELS:
         for prompt in PROMPTS:
@@ -57,25 +53,17 @@ def main():
                     result.grade = grade
                     result.info = info
 
-                    runner.print_result(result)
-
-                except ollama.ResponseError as e:
-                    result.response = response
-                    result.grade = 0
-                    result.time_elapsed = _time
-                    result.error = e.error
-                    print("Error:", e.error)
+                    printer.print_result(result)
 
                 finally:
                     _time = round(time.perf_counter() - start_query_time, 2)
                     result.time_elapsed = _time
-                    runner.report.results.append(result)
-                    save_logs(runner.report, run_id)
+                    printer.report.results.append(result)
+                    printer.save_report(run_id)
 
-    runner.print_report()
+    printer.print_report()
+    printer.compute_time()
     print()
-    print(f"Time elapsed: {time.perf_counter() - start_time:.0f} seconds")
-    print(f"Saved logs to: outputs/{run_id}")
 
 
 if __name__ == "__main__":

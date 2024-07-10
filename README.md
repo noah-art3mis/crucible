@@ -6,14 +6,6 @@ Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally if ne
 
 ## How to use
 
-1.  Setup:
-
-    ```bash
-    python -m venv venv
-    venv/Scripts/Activate
-    pip install -r requirements.txt
-    ```
-
 1.  Set the models in `models.py`
 1.  Set prompts in `prompts.py`
 1.  Set variables in `variables.py`
@@ -65,7 +57,10 @@ Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally if ne
 
 ## TODO
 
--   refactor models
+-   create job class
+-   separate printer and printer
+-   add model nickname
+-   refactor Model for deduplication
 -   save logs in yaml?
 -   add [asyncio](https://github.com/ollama/ollama-python?tab=readme-ov-file#async-client)
 

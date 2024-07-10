@@ -52,10 +52,14 @@ def grade_response(
             raise ValueError(f"Unknown grading type: {grading_type}")
 
 
-def parse_grading(grading: str) -> tuple[int, str]:
+def parse_grading(
+    grading: str,
+    rating: str = "rating",
+    explanation: str = "explanation",
+) -> tuple[int, str]:
 
-    grade_tags = r"<rating>(.*?)</rating>"
-    info_tags = r"<explanation>(.*?)</explanation>"
+    grade_tags = f"<{rating}>(.*?)</{rating}>"
+    info_tags = f"<{explanation}>(.*?)</{explanation}>"
 
     rating_match = re.search(grade_tags, grading, re.DOTALL)
     info_match = re.search(info_tags, grading, re.DOTALL)
