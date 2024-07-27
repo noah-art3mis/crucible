@@ -20,6 +20,9 @@ class LocalModel(Model):
 
     # override
     def estimate_costs(self, n_tokens: int) -> float:
+        if n_tokens < 0:
+            raise ValueError("n_tokens must be a positive integer.")
+
         return 0.0
 
     # override
@@ -27,7 +30,7 @@ class LocalModel(Model):
         return super().get_n_tokens(text)
 
     # override
-    def _get_actual_costs(self, response: object):
+    def _print_actual_costs(self, response: object):
         print(f"Actual Cost: actually free!")
 
     # override
@@ -44,7 +47,7 @@ class LocalModel(Model):
         response = self._get_completion(messages, temp)
 
         if not danger_mode:
-            self._get_actual_costs(response)
+            self._print_actual_costs(response)
 
         return self._parse_completion(response)
 

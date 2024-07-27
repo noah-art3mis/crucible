@@ -23,7 +23,7 @@ class Model(ABC):
     @abstractmethod
     def _check_allowed_models(self, id: str) -> None:
         pass
-            
+
     @abstractmethod
     def estimate_costs(self, n_tokens: int) -> float:
         pass
@@ -36,7 +36,7 @@ class Model(ABC):
         return n_tokens
 
     @abstractmethod
-    def _get_actual_costs(self, response: object) -> None:
+    def _print_actual_costs(self, response: object) -> None:
         pass
 
     @abstractmethod
@@ -59,4 +59,3 @@ class Model(ABC):
         # TODO
         text = prompt.content.replace(prompt.slot, variable.content)
         return [{"role": "user", "content": text}]
-

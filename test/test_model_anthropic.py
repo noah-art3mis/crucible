@@ -45,17 +45,17 @@ class TestAnthropicModel:
         m = AnthropicModel("claude-3-haiku-20240307")
         assert m.get_n_tokens("") == 0
 
-    # def test_get_actual_costs(self, capsys):
+    # def test_print_actual_costs(self, capsys):
     #     m = AnthropicModel("claude-3-haiku-20240307")
     #     response = {"usage": {"input_tokens": 100, "output_tokens": 200}}
-    #     m._get_actual_costs(response)
+    #     m._print_actual_costs(response)
     #     captured = capsys.readouterr()
     #     assert "Actual Cost" in captured.out
 
-    # def test_get_actual_costs_null_response(self):
+    # def test_print_actual_costs_null_response(self):
     #     m = AnthropicModel("claude-3-haiku-20240307")
     #     with pytest.raises(ValueError):
-    #         m._get_actual_costs(None)
+    #         m._print_actual_costs(None)
 
     def test_build_messages(self):
         m = AnthropicModel("claude-3-haiku-20240307")

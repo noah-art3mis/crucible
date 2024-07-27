@@ -38,7 +38,7 @@ class AnthropicModel(Model):
         return super().get_n_tokens(text)
 
     # override
-    def _get_actual_costs(self, response: object) -> None:
+    def _print_actual_costs(self, response: object) -> None:
         if response is None:
             raise ValueError("Response is None.")
 
@@ -68,7 +68,7 @@ class AnthropicModel(Model):
         response = self._get_completion(messages, temp)
 
         if not danger_mode:
-            self._get_actual_costs(response)
+            self._print_actual_costs(response)
 
         return self._parse_completion(response)
 

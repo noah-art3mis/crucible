@@ -12,20 +12,26 @@ class OpenAIModel(Model):
     def __init__(self, id: str) -> None:
         super().__init__(id)
         self.source = Source.OPENAI
-        self.omni_input = 5.0 / 1_000_000
-        self.omni_output = 15.0 / 1_000_000
 
     def _check_allowed_models(self, id: str) -> None:
         match id:
             case "gpt-4o":
+                self.input = 5.0 / 1_000_000
+                self.output = 15.0 / 1_000_000
                 return
+            case "gpt-4o-mini":
+                self.input = 0.15 / 1_000_000
+                self.output = 0.60 / 1_000_000
             case _:
                 raise ValueError(f"Model {id} not found.")
 
     # override
     def estimate_costs(self, n_tokens: int) -> float:
-        input_cost = n_tokens * self.omni_input
-        output_cost = n_tokens * self.omni_output
+        if n_tokens < 0:
+            raise ValueError("n_tokens must be a positive integer.")
+
+        input_cost = n_tokens * self.input
+        output_cost = n_tokens * self.output
         total_cost = input_cost + output_cost
         return total_cost
 
@@ -37,12 +43,12 @@ class OpenAIModel(Model):
         return n_tokens
 
     # override
-    def _get_actual_costs(self, response: object) -> None:
+    def _print_actual_costs(self, response: object) -> None:
         i_tokens = response.usage.prompt_tokens  # type: ignore
         o_tokens = response.usage.completion_tokens  # type: ignore
 
-        input_cost = i_tokens * self.omni_input
-        output_cost = o_tokens * self.omni_output
+        input_cost = i_tokens * self.input
+        output_cost = o_tokens * self.output
         total_cost = input_cost + output_cost
 
         print(f"\nActual Cost: {i_tokens} + {o_tokens} =  ${total_cost:.2f}")
@@ -63,7 +69,7 @@ class OpenAIModel(Model):
         response = self._get_completion(messages, temp)
 
         if not danger_mode:
-            self._get_actual_costs(response)
+            self._print_actual_costs(response)
 
         return self._parse_completion(response)
 
