@@ -57,6 +57,8 @@ Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally if ne
 
 ## TODO
 
+-   add checks for specific models
+-   fix: urgent does not call proper model
 -   add actual cost to result
 -   turn query into an interface
 -   save logs in yaml?

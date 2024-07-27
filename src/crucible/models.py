@@ -1,4 +1,7 @@
-from crucible.classes.Model import OpenAIModel, AnthropicModel, LocalModel, Model
+from src.crucible.classes.Model import Model
+from crucible.classes.AnthropicModel import AnthropicModel
+from src.crucible.classes.LocalModel import LocalModel
+from src.crucible.classes.OpenAIModel import OpenAIModel
 
 models_: list[Model] = [
     OpenAIModel("gpt-4o"),

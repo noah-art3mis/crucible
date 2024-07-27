@@ -4,8 +4,8 @@ import time
 from crucible.prompts import prompts_
 from crucible.variables import variables_
 from crucible.models import models_
-from crucible.classes.Report import Result
 from crucible.utils.grading import GradingType
+from crucible.classes.Report import Result
 from crucible.classes.Printer import Printer
 from crucible.classes.Task import Task
 
@@ -18,7 +18,7 @@ TEMPERATURE = 0.0
 DANGER_MODE = True  # does not ask permission about prices; use with care.
 
 
-def main():
+def forge():
     run_id = time.strftime("%Y%m%d%H%M%S")
     title = f"CRUCIBLE PROMPT EVALUATION {run_id}"
 
@@ -85,4 +85,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    forge()
