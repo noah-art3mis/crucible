@@ -4,6 +4,8 @@ Prompt evaluation package. Test multiple models, prompts and variables.
 
 Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally if needed.
 
+Cost estimation gives very rough estimates (input times 2).
+
 ## How to use
 
 1.  Set the models in `models.py`
@@ -57,6 +59,7 @@ Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally if ne
 
 ## TODO
 
+-   add task list to printer. rename to runner
 -   add checks for specific models
 -   fix: urgent does not call proper model
 -   add actual cost to result

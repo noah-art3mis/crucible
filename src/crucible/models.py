@@ -1,10 +1,10 @@
-from src.crucible.classes.Model import Model
+from crucible.classes.Model import Model
 from crucible.classes.AnthropicModel import AnthropicModel
-from src.crucible.classes.LocalModel import LocalModel
-from src.crucible.classes.OpenAIModel import OpenAIModel
+from crucible.classes.LocalModel import LocalModel
+from crucible.classes.OpenAIModel import OpenAIModel
 
 models_: list[Model] = [
-    OpenAIModel("gpt-4o"),
+    OpenAIModel("gpt-4o-mini"),
     AnthropicModel("claude-3-haiku-20240307"),
-    LocalModel("llama3"),
+    # LocalModel("llama3"),
 ]

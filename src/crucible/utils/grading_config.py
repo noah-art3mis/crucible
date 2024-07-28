@@ -1,4 +1,4 @@
-from crucible.classes.Model import OpenAIModel
+from crucible.classes.OpenAIModel import OpenAIModel
 
 
 GRADING_MODEL = OpenAIModel("gpt-4o")

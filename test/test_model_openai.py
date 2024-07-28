@@ -1,7 +1,7 @@
-from src.crucible.classes.OpenAIModel import OpenAIModel
-from src.crucible.classes.Model import Source
-from src.crucible.classes.Variable import Variable
-from src.crucible.classes.Prompt import Prompt
+from crucible.classes.OpenAIModel import OpenAIModel
+from crucible.classes.Model import Source
+from crucible.classes.Variable import Variable
+from crucible.classes.Prompt import Prompt
 
 import pytest
 
@@ -45,17 +45,17 @@ class TestOpenAIModel:
         m = OpenAIModel("gpt-4o")
         assert m.get_n_tokens("") == 0
 
-    # def test_print_actual_costs(self, capsys):
+    # def testcalculate_cost(self, capsys):
     #     m = OpenAIModel("gpt-4o")
     #     response = {"usage": {"input_tokens": 100, "output_tokens": 200}}
-    #     m._print_actual_costs(response)
+    #     m.calculate_cost(response)
     #     captured = capsys.readouterr()
     #     assert "Actual Cost" in captured.out
 
-    # def test_print_actual_costs_null_response(self):
+    # def testcalculate_cost_null_response(self):
     #     m = OpenAIModel("gpt-4o")
     #     with pytest.raises(ValueError):
-    #         m._print_actual_costs(None)
+    #         m.calculate_cost(None)
 
     def test_build_messages(self):
         m = OpenAIModel("gpt-4o")

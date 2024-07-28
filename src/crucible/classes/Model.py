@@ -36,7 +36,7 @@ class Model(ABC):
         return n_tokens
 
     @abstractmethod
-    def _print_actual_costs(self, response: object) -> None:
+    def calculate_cost(self, response: object) -> float:
         pass
 
     @abstractmethod

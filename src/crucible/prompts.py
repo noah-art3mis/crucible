@@ -53,3 +53,4 @@ Forneça sua resposta no seguinte formato JSON:
 Preencha os valores para cada chave com base em sua análise do texto. Lembre-se de usar null se não houver informações suficientes para responder a uma determinada pergunta.""",
     )
 ]
+

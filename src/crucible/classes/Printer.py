@@ -1,62 +1,50 @@
-import sys
-import time
-import yaml
 from crucible.classes.Model import Model
-from crucible.classes.Task import Task
-from crucible.utils.grading import GradingType
-from crucible.classes.Report import Result, Report
-from crucible.classes.Variable import Variable
 from crucible.classes.Prompt import Prompt
+from crucible.classes.Variable import Variable
+from crucible.classes.Report import Result
+from crucible.classes.Runner import Runner
+from crucible.classes.Task import Task
+
+import time
 
 
 class Printer:
-
-    def __init__(
-        self,
-        title: str,
-        models: list[Model],
-        prompts: list[Prompt],
-        variables: list[Variable],
-        grading_type: GradingType,
-    ):
-        self.title = title
-        self.models = models
-        self.prompts = prompts
-        self.variables = variables
-        self.total_cases = len(self.models) * len(self.prompts) * len(self.variables)
+    def __init__(self, runner: Runner) -> None:
+        self.runner = runner
         self.current_case = 1
-        self.report = Report()
-        self.grading_type = grading_type
-        self.start_time = time.perf_counter()
 
-    def start(self) -> None:
+    def display_start(self) -> None:
         content = []
+        title = f"CRUCIBLE PROMPT EVALUATION {self.runner.id}"
 
-        content.append("\n")
-        content.append("=" * len(self.title))
-        content.append(self.title)
-        content.append("=" * len(self.title))
-        content.append(f"models: " + ", ".join([str(x.id) for x in self.models]))
-        content.append(f"prompts: " + ", ".join([str(x.id) for x in self.prompts]))
-        content.append(f"variables: " + ", ".join([str(x.id) for x in self.variables]))
+        content.append("=" * len(title))
+        content.append(title)
+        content.append("=" * len(title))
+        content.append(f"models: " + ", ".join([str(x.id) for x in self.runner.models]))
         content.append(
-            f"total cases: {len(self.models) * len(self.prompts) * len(self.variables)}"
+            f"prompts: " + ", ".join([str(x.id) for x in self.runner.prompts])
         )
-        content.append("=" * len(self.title))
+        content.append(
+            f"variables: " + ", ".join([str(x.id) for x in self.runner.variables])
+        )
+        content.append(
+            f"total cases: {len(self.runner.models) * len(self.runner.prompts) * len(self.runner.variables)}"
+        )
+        content.append("=" * len(title))
 
         for item in content:
             print(item)
-            self.report.header += item + "\n"
+            self.runner.report.header += item + "\n"
         print()
 
-    def print_header(self) -> None:
+    def display_header(self) -> None:
 
         max_widths = {
             "case": len("99/99"),
             "grade": len("grade"),
-            "model": self._get_len("model", self.models),
-            "prompt": self._get_len("prompt", self.prompts),
-            "variable": self._get_len("variable", self.variables),
+            "model": self._get_len("model", self.runner.models),
+            "prompt": self._get_len("prompt", self.runner.prompts),
+            "variable": self._get_len("variable", self.runner.variables),
             "info": len("info"),
         }
 
@@ -65,32 +53,24 @@ class Printer:
         header = "| ".join(results)
         print(header)
 
-    def calculate_costs_all(self, tasks: list[Task], danger_mode: bool = False) -> None:
-        total_cost = 0.0
-        for task in tasks:
-            messages = task.model.build_messages(task.prompt, task.variable)
-            n_tokens = task.model.get_n_tokens(str(messages))
-            task_cost = task.model.estimate_costs(n_tokens)
-            total_cost += task_cost
-
-        if not danger_mode:
-            if not self._ask_permission(total_cost):
-                sys.exit(0)
-
-    def print_result(self, result: Result) -> None:
+    def display_result(self, task: Task) -> None:
         padding = 1
         max_chars = 100
+        result: Result | None = task.result
 
-        case = f"{self.current_case}/{self.total_cases}"
+        if result is None:
+            raise ValueError("Result cannot be None")
+
+        case = f"{self.current_case}/{len(self.runner.tasks)}"
         info = result.info if result.info is not None else ""
         info = info[:max_chars] + "..."
 
         max_widths = {
             case: len("99/99"),
             str(result.grade): len("grade"),
-            result.task.model.id: self._get_len("model", self.models),
-            result.task.prompt.id: self._get_len("prompt", self.prompts),
-            result.task.variable.id: self._get_len("variable", self.variables),
+            task.model.id: self._get_len("model", self.runner.models),
+            task.prompt.id: self._get_len("prompt", self.runner.prompts),
+            task.variable.id: self._get_len("variable", self.runner.variables),
             info: len("info"),
         }
 
@@ -100,66 +80,51 @@ class Printer:
         self.current_case += 1
         print(data)
 
-    def print_report(self, run_id: str) -> None:
-        print("\nREPORT\n")
-        self._model_report()
-        self._prompt_report()
-        self._variable_report()
-        print(f"Saved logs to: outputs/{run_id}")
-
-    def compute_time(self) -> None:
-        print(f"Time elapsed: {time.perf_counter() - self.start_time:.0f} seconds")
-
-    def save_report(self, run_id: str) -> None:
-        with open(f"outputs/{run_id}.yaml", "w", encoding="utf-8") as f:
-            yaml.dump(
-                self.report.results, f, indent=2, allow_unicode=True, sort_keys=False
-            )
-
     def _get_len(
         self, category_name: str, var: list[Model] | list[Prompt] | list[Variable]
     ) -> int:
         largest_name_in_list = max(len(str(x.id)) for x in var)
         return max(len(category_name), largest_name_in_list)
 
+    def display_report(self) -> None:
+        print("\nREPORT\n")
+        self._model_report()
+        self._prompt_report()
+        self._variable_report()
+        print()
+        print(f"Saved logs to: outputs/{self.runner.id}")
+
     def _model_report(self) -> None:
         print("BY MODEL")
-        for model in self.models:
-            models = [x for x in self.report.results if x.task.model.id == model.id]
-            self._partial_result(model.id, models)
+        for model in self.runner.models:
+            tasks_with_model = [x for x in self.runner.tasks if x.model.id == model.id]
+            self._results_by(model.id, tasks_with_model)
 
     def _prompt_report(self) -> None:
         print("BY PROMPT")
-        for prompt in self.prompts:
-            prompts = [x for x in self.report.results if x.task.prompt.id == prompt.id]
-            self._partial_result(prompt.id, prompts)
+        for prompt in self.runner.prompts:
+            tasks_with_prompt = [
+                x for x in self.runner.tasks if x.prompt.id == prompt.id
+            ]
+            self._results_by(prompt.id, tasks_with_prompt)
 
     def _variable_report(self) -> None:
         print("BY VARIABLE")
-        for variable in self.variables:
-            variables = [
-                x for x in self.report.results if x.task.variable.id == variable.id
+        for variable in self.runner.variables:
+            tasks_with_variable = [
+                x for x in self.runner.tasks if x.variable.id == variable.id
             ]
-            self._partial_result(variable.id, variables)
+            self._results_by(variable.id, tasks_with_variable)
 
-    def _partial_result(self, name: str, cases: list[Result]) -> None:
+    def _results_by(self, name: str, cases: list[Task]) -> None:
         MAX_GRADE = 10
+
+        sum_grades = sum(x.result.grade for x in cases if x.result is not None)
+
         total_max_grade = MAX_GRADE * len(cases)
-        sum_grades = sum(x.grade for x in cases if x.grade is not None)
         percentage = sum_grades / total_max_grade
         print(f"\t{name}: {sum_grades}/{total_max_grade} ({percentage * 100:.0f}%)")
 
-    def _ask_permission(self, total_cost: float) -> bool:
-        while True:
-            print(f"This will cost around ${total_cost:.2f}.")
-            response = (
-                input("Are you sure you want to continue? (y/n): ").strip().lower()
-            )
-            if response == "y":
-                print("Permission granted. Continuing...")
-                return True
-            elif response == "n":
-                print("Permission denied. Exiting...")
-                return False
-            else:
-                print("Invalid input. Please enter 'y' or 'n'.")
+    def display_elapsed_time(self) -> None:
+        t = time.perf_counter() - self.runner.start_time
+        print(f"Time elapsed: {t:.1f}s\n")

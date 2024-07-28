@@ -1,10 +1,10 @@
 import anthropic
 from dotenv import load_dotenv
 
-from src.crucible.classes.Model import Model
-from src.crucible.classes.Prompt import Prompt
-from src.crucible.classes.Variable import Variable
-from src.crucible.classes.Model import Source
+from crucible.classes.Model import Model
+from crucible.classes.Prompt import Prompt
+from crucible.classes.Variable import Variable
+from crucible.classes.Model import Source
 
 
 class AnthropicModel(Model):
@@ -38,7 +38,7 @@ class AnthropicModel(Model):
         return super().get_n_tokens(text)
 
     # override
-    def _print_actual_costs(self, response: object) -> None:
+    def calculate_cost(self, response: object) -> float:
         if response is None:
             raise ValueError("Response is None.")
 
@@ -50,6 +50,7 @@ class AnthropicModel(Model):
         total_cost = input_cost + output_cost
 
         print(f"\nActual Cost: {i_tokens} + {o_tokens} =  ${total_cost:.2f}")
+        return total_cost
 
     # override
     def _get_completion(self, messages: list, temp: float) -> object:
@@ -68,7 +69,7 @@ class AnthropicModel(Model):
         response = self._get_completion(messages, temp)
 
         if not danger_mode:
-            self._print_actual_costs(response)
+            self.calculate_cost(response)
 
         return self._parse_completion(response)
 

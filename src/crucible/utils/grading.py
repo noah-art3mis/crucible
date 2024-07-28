@@ -22,8 +22,8 @@ def grade_response(
                 _response = response.replace("\n", "").replace(" ", "")
                 _expected = expected.replace("\n", "").replace(" ", "")
                 if _response in _expected:
-                    return 10, ""
-            return 0, ""
+                    return 10, "Exact match"
+            return 0, "Not exact match"
 
         case GradingType.QUALITATIVE:
 
@@ -46,13 +46,13 @@ def grade_response(
                 danger_mode=True,
             )
 
-            return parse_grading(response)
+            return _parse_quali_grading(response)
 
         case _:
             raise ValueError(f"Unknown grading type: {grading_type}")
 
 
-def parse_grading(
+def _parse_quali_grading(
     grading: str,
     rating: str = "rating",
     explanation: str = "explanation",
