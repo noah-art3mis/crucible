@@ -1,9 +1,10 @@
 from crucible.classes.Model import Model
 from crucible.classes.Prompt import Prompt
 from crucible.classes.Variable import Variable
-from crucible.classes.Report import Result
+from crucible.classes.Result import Result
 from crucible.classes.Runner import Runner
 from crucible.classes.Task import Task
+from crucible.classes.Report import Report
 
 import time
 
@@ -34,7 +35,6 @@ class Printer:
 
         for item in content:
             print(item)
-            self.runner.report.header += item + "\n"
         print()
 
     def display_header(self) -> None:
@@ -86,44 +86,68 @@ class Printer:
         largest_name_in_list = max(len(str(x.id)) for x in var)
         return max(len(category_name), largest_name_in_list)
 
+    def display_price(self) -> None:
+        costs = self.runner.calculate_costs()
+        print(f"Actual costs: ${costs:.2f}")
+
     def display_report(self) -> None:
         print("\nREPORT\n")
-        self._model_report()
-        self._prompt_report()
-        self._variable_report()
+
+        print("BY MODEL")
+        model_grades = self._model_report()
+        for item in model_grades:
+            print(f"{item[0]}: {item[1]} / {item[2]} ({item[1] / item[2] * 100:.2f}%)")
+
+        print("BY PROMPT")
+        prompt_grades = self._prompt_report()
+        for item in prompt_grades:
+            print(f"{item[0]}: {item[1]} / {item[2]} ({item[1] / item[2] * 100:.2f}%)")
+
+        print("BY VARIABLE")
+        variable_grades = self._variable_report()
+        for item in variable_grades:
+            print(f"{item[0]}: {item[1]} / {item[2]} ({item[1] / item[2] * 100:.2f}%)")
+
         print()
+        self.display_price()
+        self.display_elapsed_time()
         print(f"Saved logs to: outputs/{self.runner.id}")
 
-    def _model_report(self) -> None:
-        print("BY MODEL")
+    def _model_report(self) -> list[tuple[str, int, int]]:
+        grading = []
         for model in self.runner.models:
             tasks_with_model = [x for x in self.runner.tasks if x.model.id == model.id]
-            self._results_by(model.id, tasks_with_model)
+            grades, total_grades = self._results_by(tasks_with_model)
+            grading.append((model.id, grades, total_grades))
+        return grading
 
-    def _prompt_report(self) -> None:
-        print("BY PROMPT")
+    def _prompt_report(self) -> list[tuple[str, int, int]]:
+        grading = []
         for prompt in self.runner.prompts:
             tasks_with_prompt = [
                 x for x in self.runner.tasks if x.prompt.id == prompt.id
             ]
-            self._results_by(prompt.id, tasks_with_prompt)
+            grades, total_grades = self._results_by(tasks_with_prompt)
+            grading.append((prompt.id, grades, total_grades))
+        return grading
 
-    def _variable_report(self) -> None:
-        print("BY VARIABLE")
+    def _variable_report(self) -> list[tuple[str, int, int]]:
+        grading = []
         for variable in self.runner.variables:
             tasks_with_variable = [
                 x for x in self.runner.tasks if x.variable.id == variable.id
             ]
-            self._results_by(variable.id, tasks_with_variable)
+            grades, total_grades = self._results_by(tasks_with_variable)
+            grading.append((variable.id, grades, total_grades))
+        return grading
 
-    def _results_by(self, name: str, cases: list[Task]) -> None:
+    def _results_by(self, cases: list[Task]) -> tuple[int, int]:
         MAX_GRADE = 10
 
         sum_grades = sum(x.result.grade for x in cases if x.result is not None)
 
         total_max_grade = MAX_GRADE * len(cases)
-        percentage = sum_grades / total_max_grade
-        print(f"\t{name}: {sum_grades}/{total_max_grade} ({percentage * 100:.0f}%)")
+        return sum_grades, total_max_grade
 
     def display_elapsed_time(self) -> None:
         t = time.perf_counter() - self.runner.start_time

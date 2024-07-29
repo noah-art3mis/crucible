@@ -6,6 +6,7 @@ from crucible.classes.Prompt import Prompt
 from crucible.classes.Variable import Variable
 from crucible.classes.OpenAIModel import OpenAIModel
 from crucible.classes.AnthropicModel import AnthropicModel
+from crucible.classes.Report import Report
 
 available_models = [
     {"name": "gpt-4o-mini", "source": Source.OPENAI},
@@ -30,7 +31,7 @@ with st.expander("Models"):
         "Select models",
         available_models,
         format_func=lambda x: x["name"],
-        default=available_models[0],
+        default=[available_models[0]],
     )
 
     st.write("---")
@@ -43,12 +44,12 @@ with st.expander("Models"):
 
     models = []
     for model_info in selected_models:
-        name = model_info["name"]
+        model_name = model_info["name"]
         source = model_info["source"]
         if source == Source.OPENAI:
-            models.append(OpenAIModel(name))
+            models.append(OpenAIModel(model_name))
         if source == Source.ANTHROPIC:
-            models.append(AnthropicModel(name))
+            models.append(AnthropicModel(model_name))
 
 
 with st.expander("Prompts"):
@@ -95,9 +96,20 @@ grading_type = st.selectbox(
 )
 temperature = st.slider("Select temperature", 0.0, 1.0, 0.0, 0.2)
 
-st.markdown("---")
-if st.button("Compile"):
 
+st.markdown("---")
+
+if "compiled" not in st.session_state:
+    st.session_state.compiled = False
+
+
+def click_button():
+    st.session_state.compiled = True
+
+
+st.button("Compile", on_click=click_button)
+
+if st.session_state.compiled:
     st.subheader("Summary:")
 
     runner = Runner(
@@ -112,31 +124,38 @@ if st.button("Compile"):
     )
     estimated_costs = runner.estimate_all_costs()
 
-    st.write("Models")
+    st.markdown("- **Models**")
     for model in runner.models:
-        st.write(f"- {model.id}")
+        st.markdown(f"\t- {model.id}")
 
-    st.write("Prompts")
+    st.markdown("- **Prompts**")
     for prompt in runner.prompts:
-        st.write(f"- {prompt.id}")
+        st.markdown(f"\t- {prompt.id}")
 
-    st.write("Variables")
+    st.markdown("- **Variables**")
     for variable in runner.variables:
-        st.write(f"- {variable.id}")
+        st.markdown(f"\t- {variable.id}")
 
-    st.write(f"Grading Type: {runner.grading_type}")
-    st.write(f"Temperature: {runner.temperature}")
-    st.write()
-    st.write(f"Total cases: {len(runner.tasks)}")
-    st.write(f"Estimated costs: ${estimated_costs:.2f} USD")
+    st.markdown(f"**Grading Type**: {runner.grading_type}")
+    st.markdown(f"**Temperature**: {runner.temperature}")
+    st.markdown(f"**Total cases**: {len(runner.tasks)}")
+    st.markdown(f"**Estimated costs**: ${estimated_costs:.2f} USD")
 
     if estimated_costs > 1.00:
         st.warning("Are you sure?")
 
     if st.button("Run"):
+        progress_bar = st.progress(0, text="Running CRUCIBLE...")
         for i, task in enumerate(runner.tasks):
-            st.progress(i)
             runner.run_task(task)
 
+            progress = (i + 1) / len(runner.tasks)
+            progress_bar.progress(progress, text="Running CRUCIBLE...")
 
+        report = Report(runner)
+        result = report.__dict__
+        st.subheader("Results:")
+        st.write(result)
+
+# Uncomment and implement if needed
 # st.download_button("Download report", file)

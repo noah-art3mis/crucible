@@ -80,5 +80,5 @@ class TestAnthropicModel:
         m = AnthropicModel("claude-3-haiku-20240307")
         p = Prompt("test_p", "<variable>", "respond exactly with <|TEST|>")
         v = Variable("test_v", "", ["test_x"])
-        r = m.query(p, v, 0.0, os.getenv("ANTHROPIC_API_KEY") or "", False)
-        assert r == "<|TEST|>"
+        r = m.query(p, v, 0.0, os.getenv("ANTHROPIC_API_KEY") or "")
+        assert r[0] == "<|TEST|>"

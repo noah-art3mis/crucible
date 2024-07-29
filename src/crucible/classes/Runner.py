@@ -3,9 +3,10 @@ import uuid
 
 from crucible.classes.Model import Model, Source
 from crucible.classes.Task import Task
-from crucible.classes.Report import Result, Report
+from crucible.classes.Result import Result
 from crucible.classes.Variable import Variable
 from crucible.classes.Prompt import Prompt
+from crucible.classes.Report import Report
 from crucible.utils.grading import GradingType
 from crucible.utils.confirmation import are_you_sure
 from crucible.utils.grading import grade_response
@@ -37,7 +38,6 @@ class Runner:
 
         self.id = time.strftime("%Y%m%d%H%M%S")
         self.tasks = self._generate_tasks(models, prompts, variables)
-        self.report = Report()
         self.start_time = time.perf_counter()
 
     def _generate_tasks(
@@ -71,25 +71,22 @@ class Runner:
             if task.model.source == Source.LOCAL:
                 pass
 
-            response = task.model.query(
+            response, cost = task.model.query(
                 task.prompt,
                 task.variable,
                 self.temperature,
                 api_key,
-                self.danger_mode,
             )
 
             grade, info = grade_response(
-                response,
-                task.variable,
-                self.grading_type,
+                response, task.variable, self.grading_type, self.openai_api_key
             )
 
             task.result = Result(
-                response=response,
                 grade=grade,
+                actual_cost=cost,
+                response=response,
                 info=info,
-                actual_cost=task.model.calculate_cost(response),
                 time_elapsed=round(time.perf_counter() - start_query_time, 2),
             )
 
@@ -99,16 +96,28 @@ class Runner:
                 response=None,
                 grade=0,
                 info=str(e),
-                actual_cost=None,
+                actual_cost=0,  # not true; errors still count towards total cost
                 time_elapsed=round(time.perf_counter() - start_query_time, 2),
             )
 
-    def estimate_all_costs(self, danger_mode: bool = False) -> float:
+    def estimate_all_costs(self) -> float:
         total_cost = 0.0
         for task in self.tasks:
             total_cost += task.estimated_cost
 
-        are_you_sure(total_cost, danger_mode)
+        are_you_sure(total_cost, self.danger_mode)
+
+        return total_cost
+
+    def calculate_costs(self) -> float:
+        total_cost = 0.0
+        for task in self.tasks:
+            if task.result is None:
+                raise ValueError(f"Task {task.id} has no result.")
+
+            total_cost += task.result.actual_cost
+
+        are_you_sure(total_cost, self.danger_mode)
 
         return total_cost
 
@@ -116,3 +125,11 @@ class Runner:
         for arg in args:
             if arg is None:
                 raise ValueError(f"No globals provided for {arg}")
+
+    def generate_report(self) -> str:
+        for task in self.tasks:
+            self.report.add_result(task)
+
+        self.report.calculate_total_cost()
+
+        return self.report.generate_report()

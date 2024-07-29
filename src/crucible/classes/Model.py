@@ -54,9 +54,8 @@ class Model(ABC):
         prompt: Prompt,
         variable: Variable,
         temp: float,
-        api_key: str | None,
-        danger_mode: bool,
-    ) -> str:
+        api_key: str | None
+    ) -> tuple[str, float]:
         pass
 
     def build_messages(

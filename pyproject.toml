@@ -18,6 +18,7 @@ streamlit = "^1.37.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.2"
+rich = "^13.7.1"
 
 [build-system]
 requires = ["poetry-core"]

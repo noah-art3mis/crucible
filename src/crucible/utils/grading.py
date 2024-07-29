@@ -1,6 +1,8 @@
 import re
 from enum import Enum, auto
 
+from dotenv import load_dotenv
+
 from crucible.classes.Prompt import Prompt
 from crucible.classes.Variable import Variable
 from crucible.utils.grading_config import GRADING_MODEL, GRADING_PROMPT
@@ -12,7 +14,7 @@ class GradingType(Enum):
 
 
 def grade_response(
-    response: str, variable: Variable, grading_type: GradingType
+    response: str, variable: Variable, grading_type: GradingType, openai_api_key: str
 ) -> tuple[int, str]:
 
     match grading_type:
@@ -44,6 +46,7 @@ def grade_response(
                 variable=_variable,
                 temp=0,
                 danger_mode=True,
+                api_key=openai_api_key,
             )
 
             return _parse_quali_grading(response)

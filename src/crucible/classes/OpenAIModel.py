@@ -51,7 +51,7 @@ class OpenAIModel(Model):
         output_cost = o_tokens * self.output
         total_cost = input_cost + output_cost
 
-        print(f"\nActual Cost: {i_tokens} + {o_tokens} =  ${total_cost:.2f}")
+        # print(f"\nActual Cost: {i_tokens} + {o_tokens} =  ${total_cost:.2f}")
         return total_cost
 
     # override
@@ -75,15 +75,14 @@ class OpenAIModel(Model):
         variable: Variable,
         temp: float,
         api_key: str,
-        danger_mode: bool,
     ):
         messages = self.build_messages(prompt, variable)
         response = self._get_completion(messages, temp, api_key)
 
-        if not danger_mode:
-            self.calculate_cost(response)
+        completion = self._parse_completion(response)
+        costs = self.calculate_cost(response)
 
-        return self._parse_completion(response)
+        return completion, costs
 
     # override
     def _parse_completion(self, response: object) -> str:

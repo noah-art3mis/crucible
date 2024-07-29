@@ -48,15 +48,14 @@ class LocalModel(Model):
         variable: Variable,
         temp: float,
         api_key: None,
-        danger_mode: bool,
     ):
         messages = self.build_messages(prompt, variable)
         response = self._get_completion(messages, temp, api_key)
 
-        if not danger_mode:
-            self.calculate_cost(response)
+        completion = self._parse_completion(response)
+        costs = self.calculate_cost(response)
 
-        return self._parse_completion(response)
+        return completion, costs
 
     # override
     def _parse_completion(self, response: object) -> str:

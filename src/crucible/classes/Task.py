@@ -1,7 +1,7 @@
 from crucible.classes.Model import Model
 from crucible.classes.Prompt import Prompt
 from crucible.classes.Variable import Variable
-from crucible.classes.Report import Result
+from crucible.classes.Result import Result
 
 from dataclasses import dataclass, field
 
