@@ -1,8 +1,8 @@
 ## Crucible
 
-Lightweight prompt evaluation package.
+Lightweight prompt evaluation package. Use online [here](https://crucible.streamlit.app/).
 
-Use online [here](https://crucible.streamlit.app/). Can also be used locally through streamlit. Can use [ollama](https://github.com/ollama/ollama-python) to run LLMs locally if necessary.
+Can also be used locally using poetry and streamlit. Can run LLMs locally using [ollama](https://github.com/ollama/ollama-python) as well.
 
 Cost estimation is very rough (input \* 2).
 
@@ -17,19 +17,10 @@ Cost estimation is very rough (input \* 2).
 
 ## Parameters
 
--   `Model`
-
-    -   id (str): name as understood by ollama. you might need to download it first
-    -   source (str): "local" or "openai" or "anthropic"
-
-    ```python
-    Model("llama3", "local")
-    ```
-
 -   `Prompt`
 
     -   id (str): name of the test case
-    -   slot (str): name of theslot which will be substituted by the variable in the prompt
+    -   slot (str): name of the slot which will be substituted by the variable in the prompt
     -   content (str): actual prompt
 
     ```python
@@ -43,9 +34,8 @@ Cost estimation is very rough (input \* 2).
 -   `Variable`
 
     -   id (str): name of the test case
-    -   content (str): text of snippet to be inserted in prompt
+    -   content (str): text to be inserted in prompt
     -   expected (str list): values that would be considered correct
-    -   options (str list): all values that the response could take. leave empty if does not apply
 
     ```python
     Variable(
