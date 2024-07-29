@@ -125,11 +125,3 @@ class Runner:
         for arg in args:
             if arg is None:
                 raise ValueError(f"No globals provided for {arg}")
-
-    def generate_report(self) -> str:
-        for task in self.tasks:
-            self.report.add_result(task)
-
-        self.report.calculate_total_cost()
-
-        return self.report.generate_report()

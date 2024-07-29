@@ -2,9 +2,9 @@
 
 Lightweight prompt evaluation package.
 
-Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally if needed.
+Use online. Can also be used locally through streamlit. Can use [ollama](https://github.com/ollama/ollama-python) to run LLMs locally if necessary.
 
-Cost estimation gives very rough estimates (input times 2).
+Cost estimation is very rough (input \* 2).
 
 ## How to use
 
@@ -59,11 +59,8 @@ Cost estimation gives very rough estimates (input times 2).
 
 ## TODO
 
--   add 'get report' to runner
--   fix: urgent does not call proper model
--   turn query into an interface
--   save logs in txt
--   add [asyncio](https://github.com/ollama/ollama-python?tab=readme-ov-file#async-client)
+-   add tables
+-   add tests
 
 ## Resources
 

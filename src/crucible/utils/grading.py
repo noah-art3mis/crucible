@@ -41,11 +41,10 @@ def grade_response(
                 content=GRADING_PROMPT.replace("{expected}", variable.expected[0]),
             )
 
-            response = _model.query(
+            response, cost = _model.query(
                 prompt=_prompt,
                 variable=_variable,
                 temp=0,
-                danger_mode=True,
                 api_key=openai_api_key,
             )
 

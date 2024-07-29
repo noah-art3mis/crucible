@@ -1,4 +1,6 @@
+import pandas as pd
 import streamlit as st
+
 from crucible.utils.grading import GradingType
 from crucible.classes.Runner import Runner
 from crucible.classes.Model import Source
@@ -22,8 +24,7 @@ st.title("Crucible")
 st.caption("Lightweight prompt evaluation")
 st.caption("An AUTOMATON tool")
 
-st.markdown("---")
-st.subheader("Configuration")
+st.header("Configuration")
 
 with st.expander("Models"):
 
@@ -69,7 +70,7 @@ with st.expander("Prompts"):
         prompts.append(Prompt(prompt_id, prompt_slot, prompt_content))
 
 
-with st.expander("Variable"):
+with st.expander("Variables"):
     n_var = st.number_input("Number of variables", min_value=1, max_value=20, value=2)
     variables = []
     for i in range(int(n_var)):
@@ -91,10 +92,11 @@ with st.expander("Variable"):
 
 st.markdown("---")
 st.subheader("Other configs")
-grading_type = st.selectbox(
-    "Select grading type", available_gradings, format_func=lambda x: x.name
+a1, a2 = st.columns(2)
+grading_type = a1.selectbox(
+    "Select grading type", available_gradings, format_func=lambda x: x.name.lower()
 )
-temperature = st.slider("Select temperature", 0.0, 1.0, 0.0, 0.2)
+temperature = a2.slider("Select temperature", 0.0, 1.0, 0.0, 0.2)
 
 
 st.markdown("---")
@@ -110,7 +112,7 @@ def click_button():
 st.button("Compile", on_click=click_button)
 
 if st.session_state.compiled:
-    st.subheader("Summary:")
+    st.header("Summary:")
 
     runner = Runner(
         models=models,
@@ -124,19 +126,20 @@ if st.session_state.compiled:
     )
     estimated_costs = runner.estimate_all_costs()
 
-    st.markdown("- **Models**")
+    c1, c2, c3 = st.columns(3)
+    c1.markdown("**Models**")
     for model in runner.models:
-        st.markdown(f"\t- {model.id}")
+        c1.markdown(f"\t- {model.id}")
 
-    st.markdown("- **Prompts**")
+    c2.markdown("**Prompts**")
     for prompt in runner.prompts:
-        st.markdown(f"\t- {prompt.id}")
+        c2.markdown(f"\t- {prompt.id}")
 
-    st.markdown("- **Variables**")
+    c3.markdown("**Variables**")
     for variable in runner.variables:
-        st.markdown(f"\t- {variable.id}")
+        c3.markdown(f"\t- {variable.id}")
 
-    st.markdown(f"**Grading Type**: {runner.grading_type}")
+    st.markdown(f"**Grading Type**: {runner.grading_type.name.lower()}")
     st.markdown(f"**Temperature**: {runner.temperature}")
     st.markdown(f"**Total cases**: {len(runner.tasks)}")
     st.markdown(f"**Estimated costs**: ${estimated_costs:.2f} USD")
@@ -153,9 +156,21 @@ if st.session_state.compiled:
             progress_bar.progress(progress, text="Running CRUCIBLE...")
 
         report = Report(runner)
-        result = report.__dict__
-        st.subheader("Results:")
-        st.write(result)
 
-# Uncomment and implement if needed
-# st.download_button("Download report", file)
+        st.header("Results:")
+        col1, col2 = st.columns(2)
+        col1.metric("Cost (USD)", report.cost)
+        col2.metric("Time (seconds)", report.time)
+
+        st.subheader("Per model:")
+        st.data_editor(pd.DataFrame(report.per_model))
+        st.subheader("Per prompt:")
+        st.data_editor(pd.DataFrame(report.per_prompt))
+        st.subheader("Per variable:")
+        st.data_editor(pd.DataFrame(report.per_variable))
+
+        st.subheader("All tasks:")
+        st.data_editor(pd.DataFrame(report.tasks))
+
+        st.subheader("Result(json):")
+        st.write(report.__dict__)

@@ -14,6 +14,7 @@ tiktoken = "^0.7.0"
 python-dotenv = "^1.0.1"
 ollama = "^0.2.1"
 streamlit = "^1.37.0"
+pandas = "^2.2.2"
 
 
 [tool.poetry.group.dev.dependencies]
