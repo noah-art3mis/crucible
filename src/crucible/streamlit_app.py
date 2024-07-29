@@ -23,6 +23,7 @@ danger_mode = True  # always true
 st.title("Crucible")
 st.caption("Lightweight prompt evaluation")
 st.caption("An AUTOMATON tool")
+st.caption("[Source](https://github.com/noah-art3mis/crucible)")
 
 st.header("Configuration")
 

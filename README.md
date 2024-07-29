@@ -2,20 +2,18 @@
 
 Lightweight prompt evaluation package.
 
-Use online. Can also be used locally through streamlit. Can use [ollama](https://github.com/ollama/ollama-python) to run LLMs locally if necessary.
+Use online [here](https://crucible.streamlit.app/). Can also be used locally through streamlit. Can use [ollama](https://github.com/ollama/ollama-python) to run LLMs locally if necessary.
 
 Cost estimation is very rough (input \* 2).
 
-## How to use
+## Instructions
 
-1.  Set the models in `models.py`
-1.  Set prompts in `prompts.py`
-1.  Set variables in `variables.py`
-1.  Set grading style in `main.py`.
+1.  Set the models, prompts and variables
+1.  Set grading style and temperature
     -   `"EXACT"`: is either right or wrong. ignores line breaks and spaces in answer
-    -   `"QUALITATIVE"`: ask gpt4o for feedback
-1.  Run `python src/crucible/main.py`.
-1.  Logs from the run will be in `outputs/<datetime>.yaml`.
+    -   `"QUALITATIVE"`: ask gpt4o for feedback. be mindful of this token usage
+1.  Click `compile`. Check the price estimation. Click `run`.
+1.  Results are shown segmented by category.
 
 ## Parameters
 
@@ -59,8 +57,8 @@ Cost estimation is very rough (input \* 2).
 
 ## TODO
 
--   add tables
 -   add tests
+-   add instructions
 
 ## Resources
 
