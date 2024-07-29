@@ -1,6 +1,5 @@
 from openai import OpenAI
 import tiktoken
-from dotenv import load_dotenv
 
 from crucible.classes.Model import Model
 from crucible.classes.Prompt import Prompt
@@ -58,8 +57,6 @@ class OpenAIModel(Model):
     def _get_completion(
         self, messages: list, temp: float, api_key: str | None
     ) -> object:
-        if api_key is None:
-            load_dotenv()
 
         client = OpenAI(api_key=api_key)
         return client.chat.completions.create(

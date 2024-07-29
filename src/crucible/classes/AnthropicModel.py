@@ -1,6 +1,4 @@
 import anthropic
-from dotenv import load_dotenv
-
 from crucible.classes.Model import Model
 from crucible.classes.Prompt import Prompt
 from crucible.classes.Variable import Variable

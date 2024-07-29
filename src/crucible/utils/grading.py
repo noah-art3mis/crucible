@@ -1,8 +1,6 @@
 import re
 from enum import Enum, auto
 
-from dotenv import load_dotenv
-
 from crucible.classes.Prompt import Prompt
 from crucible.classes.Variable import Variable
 from crucible.utils.grading_config import GRADING_MODEL, GRADING_PROMPT
