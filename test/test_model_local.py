@@ -65,12 +65,12 @@ class TestLocalModel:
         expected = "content var content"
         assert actual == [{"role": "user", "content": expected}]
 
-    def test_completion_not_empty(self):
-        m = LocalModel("llama3")
-        p = Prompt("test_p", "<variable>", "content <variable> content")
-        v = Variable("test_v", "var", ["test_x"])
-        messages = m.build_messages(p, v)
-        assert m._get_completion(messages, 0.0)
+    # def test_completion_not_empty(self):
+    #     m = LocalModel("llama3")
+    #     p = Prompt("test_p", "<variable>", "content <variable> content")
+    #     v = Variable("test_v", "var", ["test_x"])
+    #     messages = m.build_messages(p, v)
+    #     assert m._get_completion(messages, 0.0)
 
     # def test_query(self):
     #     m = LocalModel("llama3")

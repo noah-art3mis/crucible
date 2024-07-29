@@ -1,6 +1,6 @@
 ## Crucible
 
-Prompt evaluation package. Test multiple models, prompts and variables.
+Lightweight prompt evaluation package.
 
 Uses [ollama](https://github.com/ollama/ollama-python) to run LLMs locally if needed.
 
@@ -59,12 +59,10 @@ Cost estimation gives very rough estimates (input times 2).
 
 ## TODO
 
--   add task list to printer. rename to runner
--   add checks for specific models
+-   add 'get report' to runner
 -   fix: urgent does not call proper model
--   add actual cost to result
 -   turn query into an interface
--   save logs in yaml?
+-   save logs in txt
 -   add [asyncio](https://github.com/ollama/ollama-python?tab=readme-ov-file#async-client)
 
 ## Resources

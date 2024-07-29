@@ -1,3 +1,4 @@
+from dotenv import load_dotenv
 from crucible.classes.AnthropicModel import AnthropicModel
 from crucible.utils.grading import GradingType
 from crucible.classes.OpenAIModel import OpenAIModel
@@ -5,7 +6,7 @@ from crucible.classes.Model import Source
 from crucible.classes.Variable import Variable
 from crucible.classes.Prompt import Prompt
 from crucible.classes.Runner import Runner
-
+import os
 import pytest
 
 
@@ -26,8 +27,19 @@ class TestRunner:
             Variable(id="teste_variable_2", content="VARIABLE_2", expected=["OK"]),
         ]
 
-        printer = Runner("title", m, p, v, GradingType.EXACT)
-        assert printer.total_cases == 8
+        load_dotenv()
+        runner = Runner(
+            models=m,
+            prompts=p,
+            variables=v,
+            grading_type=GradingType.EXACT,
+            danger_mode=True,
+            temperature=0.0,
+            openai_api_key=os.getenv("OPENAI_API_KEY") or "",
+            anthropic_api_key=os.getenv("ANTHROPIC_API_KEY") or "",
+        )
+
+        assert len(runner.tasks) == 8
 
     # def test_calculate_costs_0(self):
     #     printer.calculate_costs_all()

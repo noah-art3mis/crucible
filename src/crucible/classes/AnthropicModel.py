@@ -53,9 +53,8 @@ class AnthropicModel(Model):
         return total_cost
 
     # override
-    def _get_completion(self, messages: list, temp: float) -> object:
-        load_dotenv()
-        client = anthropic.Anthropic()
+    def _get_completion(self, messages: list, temp: float, api_key: str) -> object:
+        client = anthropic.Anthropic(api_key=api_key)
         return client.messages.create(
             model=self.id,
             max_tokens=4096,
@@ -64,9 +63,9 @@ class AnthropicModel(Model):
         )
 
     # override
-    def query(self, prompt: Prompt, variable: Variable, temp: float, danger_mode: bool):
+    def query(self, prompt: Prompt, variable: Variable, temp: float, api_key: str,  danger_mode: bool):
         messages = self.build_messages(prompt, variable)
-        response = self._get_completion(messages, temp)
+        response = self._get_completion(messages, temp, api_key)
 
         if not danger_mode:
             self.calculate_cost(response)

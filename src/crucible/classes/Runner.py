@@ -1,7 +1,7 @@
 import time
 import uuid
 
-from crucible.classes.Model import Model
+from crucible.classes.Model import Model, Source
 from crucible.classes.Task import Task
 from crucible.classes.Report import Result, Report
 from crucible.classes.Variable import Variable
@@ -21,6 +21,8 @@ class Runner:
         grading_type: GradingType,
         danger_mode: bool,
         temperature: float,
+        openai_api_key: str,
+        anthropic_api_key: str,
     ):
         self._check_exists(models, prompts, variables)
 
@@ -29,7 +31,9 @@ class Runner:
         self.variables = variables
         self.grading_type = grading_type
         self.danger_mode = danger_mode
-        self.temp = temperature
+        self.temperature = temperature
+        self.openai_api_key = openai_api_key
+        self.anthropic_api_key = anthropic_api_key
 
         self.id = time.strftime("%Y%m%d%H%M%S")
         self.tasks = self._generate_tasks(models, prompts, variables)
@@ -60,10 +64,18 @@ class Runner:
         try:
             start_query_time = time.perf_counter()
 
+            if task.model.source == Source.OPENAI:
+                api_key = self.openai_api_key
+            if task.model.source == Source.ANTHROPIC:
+                api_key = self.anthropic_api_key
+            if task.model.source == Source.LOCAL:
+                pass
+
             response = task.model.query(
                 task.prompt,
                 task.variable,
-                self.temp,
+                self.temperature,
+                api_key,
                 self.danger_mode,
             )
 
@@ -91,12 +103,14 @@ class Runner:
                 time_elapsed=round(time.perf_counter() - start_query_time, 2),
             )
 
-    def estimate_all_costs(self, danger_mode: bool = False) -> None:
+    def estimate_all_costs(self, danger_mode: bool = False) -> float:
         total_cost = 0.0
         for task in self.tasks:
             total_cost += task.estimated_cost
 
         are_you_sure(total_cost, danger_mode)
+
+        return total_cost
 
     def _check_exists(self, *args) -> None:
         for arg in args:

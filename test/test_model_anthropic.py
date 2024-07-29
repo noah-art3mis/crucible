@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 from crucible.classes.AnthropicModel import AnthropicModel
 from crucible.classes.Model import Source
 from crucible.classes.Variable import Variable
@@ -66,15 +68,17 @@ class TestAnthropicModel:
         assert actual == [{"role": "user", "content": expected}]
 
     def test_completion_not_empty(self):
+        load_dotenv()
         m = AnthropicModel("claude-3-haiku-20240307")
         p = Prompt("test_p", "<variable>", "content <variable> content")
         v = Variable("test_v", "var", ["test_x"])
         messages = m.build_messages(p, v)
-        assert m._get_completion(messages, 0.0)
+        assert m._get_completion(messages, 0.0, os.getenv("ANTHROPIC_API_KEY") or "")
 
     def test_query(self):
+        load_dotenv()
         m = AnthropicModel("claude-3-haiku-20240307")
         p = Prompt("test_p", "<variable>", "respond exactly with <|TEST|>")
         v = Variable("test_v", "", ["test_x"])
-        r = m.query(p, v, 0.0, False)
+        r = m.query(p, v, 0.0, os.getenv("ANTHROPIC_API_KEY") or "", False)
         assert r == "<|TEST|>"

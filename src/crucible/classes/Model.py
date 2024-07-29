@@ -19,6 +19,7 @@ class Model(ABC):
         super().__init__()
         self._check_allowed_models(id)
         self.id = id
+        self.source = None
 
     @abstractmethod
     def _check_allowed_models(self, id: str) -> None:
@@ -40,7 +41,7 @@ class Model(ABC):
         pass
 
     @abstractmethod
-    def _get_completion(self) -> str:
+    def _get_completion(self, messages: list, temp: float, api_key: str) -> str:
         pass
 
     @abstractmethod
@@ -49,7 +50,12 @@ class Model(ABC):
 
     @abstractmethod
     def query(
-        self, prompt: Prompt, variable: Variable, temp: float, danger_mode: bool
+        self,
+        prompt: Prompt,
+        variable: Variable,
+        temp: float,
+        api_key: str | None,
+        danger_mode: bool,
     ) -> str:
         pass
 

@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 from crucible.prompts import prompts_
 from crucible.variables import variables_
 from crucible.models import models_
@@ -18,6 +20,13 @@ def forge():
     PROMPTS = load_prompts(prompts_)
     VARIABLES = load_variables(variables_)
 
+    load_dotenv()
+    
+    if not os.getenv("OPENAI_API_KEY"):
+        raise ValueError("OPENAI_API_KEY not found. Please set it in .env file")
+    if not os.getenv("ANTHROPIC_API_KEY"):
+        raise ValueError("ANTHROPIC_API_KEY not found. Please set it in .env file")
+    
     runner = Runner(
         MODELS,
         PROMPTS,
@@ -25,6 +34,8 @@ def forge():
         GRADING_TYPE,
         DANGER_MODE,
         TEMPERATURE,
+        openai_api_key=os.getenv("OPENAI_API_KEY") or "",
+        anthropic_api_key=os.getenv("ANTHROPIC_API_KEY") or "",
     )
 
     printer = Printer(runner)
